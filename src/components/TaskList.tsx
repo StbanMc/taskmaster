@@ -1,4 +1,3 @@
-import { motion, AnimatePresence } from 'framer-motion';
 import { Task, Category } from '@/lib/types';
 import { TaskItem } from './TaskItem';
 import { Separator } from '@/components/ui/separator';
@@ -34,7 +33,7 @@ export function TaskList({ tasks, categories, onToggleTask, onDeleteTask }: Task
           <h2 className="text-lg font-semibold text-foreground">
             To Do ({pendingTasks.length})
           </h2>
-          <AnimatePresence>
+          <div>
             {pendingTasks.map((task) => (
               <TaskItem
                 key={task.id}
@@ -44,7 +43,7 @@ export function TaskList({ tasks, categories, onToggleTask, onDeleteTask }: Task
                 onDelete={onDeleteTask}
               />
             ))}
-          </AnimatePresence>
+          </div>
         </div>
       )}
 
@@ -59,7 +58,7 @@ export function TaskList({ tasks, categories, onToggleTask, onDeleteTask }: Task
           <h2 className="text-lg font-semibold text-muted-foreground">
             Completed ({completedTasks.length})
           </h2>
-          <AnimatePresence>
+          <div>
             {completedTasks.map((task) => (
               <TaskItem
                 key={task.id}
@@ -69,7 +68,7 @@ export function TaskList({ tasks, categories, onToggleTask, onDeleteTask }: Task
                 onDelete={onDeleteTask}
               />
             ))}
-          </AnimatePresence>
+          </div>
         </div>
       )}
     </div>

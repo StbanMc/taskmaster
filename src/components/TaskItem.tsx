@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion';
 import { Trash2 } from '@phosphor-icons/react';
 import { Task, Category } from '@/lib/types';
 import { Card } from '@/components/ui/card';
@@ -16,13 +15,7 @@ interface TaskItemProps {
 
 export function TaskItem({ task, category, onToggle, onDelete }: TaskItemProps) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, x: -300 }}
-      layout
-      transition={{ duration: 0.2 }}
-    >
+    <div className="animate-in fade-in slide-in-from-left-4 duration-200">
       <Card className={cn(
         "p-4 transition-all hover:shadow-md",
         task.completed && "opacity-60"
@@ -62,6 +55,6 @@ export function TaskItem({ task, category, onToggle, onDelete }: TaskItemProps) 
           </Button>
         </div>
       </Card>
-    </motion.div>
+    </div>
   );
 }

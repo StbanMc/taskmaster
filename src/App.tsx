@@ -6,6 +6,7 @@ import { TaskList } from '@/components/TaskList';
 import { CategoryFilter } from '@/components/CategoryFilter';
 import { Separator } from '@/components/ui/separator';
 import { CheckCircle } from '@phosphor-icons/react';
+import { Toaster, toast } from 'sonner';
 
 function App() {
   const [tasks, setTasks] = useKV<Task[]>('taskflow-tasks', []);
@@ -19,18 +20,29 @@ function App() {
       createdAt: Date.now()
     };
     setTasks(currentTasks => [...currentTasks, newTask]);
+    toast.success('Task added successfully!');
   };
 
   const toggleTask = (taskId: string) => {
     setTasks(currentTasks =>
-      currentTasks.map(task =>
-        task.id === taskId ? { ...task, completed: !task.completed } : task
-      )
+      currentTasks.map(task => {
+        if (task.id === taskId) {
+          const updated = { ...task, completed: !task.completed };
+          if (updated.completed) {
+            toast.success('Task completed! 🎉');
+          } else {
+            toast.info('Task marked as incomplete');
+          }
+          return updated;
+        }
+        return task;
+      })
     );
   };
 
   const deleteTask = (taskId: string) => {
     setTasks(currentTasks => currentTasks.filter(task => task.id !== taskId));
+    toast.error('Task deleted');
   };
 
   const filteredTasks = useMemo(() => {
@@ -96,6 +108,7 @@ function App() {
           onDeleteTask={deleteTask}
         />
       </div>
+      <Toaster position="bottom-center" />
     </div>
   );
 }
