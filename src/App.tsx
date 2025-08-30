@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useKV } from '@github/spark/hooks';
 import { Task, Category, DEFAULT_CATEGORIES } from '@/lib/types';
 import { AddTaskForm } from '@/components/AddTaskForm';
@@ -12,6 +12,22 @@ function App() {
   const [tasks, setTasks] = useKV<Task[]>('taskflow-tasks', []);
   const [categories] = useKV<Category[]>('taskflow-categories', DEFAULT_CATEGORIES);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
+
+  // Migrate existing tasks to include priority field
+  useEffect(() => {
+    const migrateTasks = () => {
+      setTasks(currentTasks => 
+        currentTasks.map(task => ({
+          ...task,
+          priority: task.priority || 'medium' // Default to medium priority for existing tasks
+        }))
+      );
+    };
+    
+    if (tasks.length > 0 && tasks.some(task => !task.priority)) {
+      migrateTasks();
+    }
+  }, [tasks, setTasks]);
 
   const addTask = (taskData: Omit<Task, 'id' | 'createdAt'>) => {
     const newTask: Task = {
@@ -43,6 +59,11 @@ function App() {
   const deleteTask = (taskId: string) => {
     setTasks(currentTasks => currentTasks.filter(task => task.id !== taskId));
     toast.error('Task deleted');
+  };
+
+  const reorderTasks = (reorderedTasks: Task[]) => {
+    setTasks(reorderedTasks);
+    toast.success('Tasks reordered');
   };
 
   const filteredTasks = useMemo(() => {
@@ -106,6 +127,7 @@ function App() {
           categories={categories}
           onToggleTask={toggleTask}
           onDeleteTask={deleteTask}
+          onReorderTasks={reorderTasks}
         />
       </div>
       <Toaster position="bottom-center" />

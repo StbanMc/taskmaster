@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Plus } from '@phosphor-icons/react';
-import { Task, Category, DEFAULT_CATEGORIES } from '@/lib/types';
+import { Task, Category, Priority, PRIORITY_CONFIG } from '@/lib/types';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -14,6 +14,7 @@ interface AddTaskFormProps {
 export function AddTaskForm({ onAddTask, categories }: AddTaskFormProps) {
   const [title, setTitle] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('general');
+  const [selectedPriority, setSelectedPriority] = useState<Priority>('medium');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,11 +23,13 @@ export function AddTaskForm({ onAddTask, categories }: AddTaskFormProps) {
     onAddTask({
       title: title.trim(),
       completed: false,
-      category: selectedCategory
+      category: selectedCategory,
+      priority: selectedPriority
     });
 
     setTitle('');
     setSelectedCategory('general');
+    setSelectedPriority('medium');
   };
 
   return (
@@ -51,6 +54,22 @@ export function AddTaskForm({ onAddTask, categories }: AddTaskFormProps) {
                 <div className="flex items-center gap-2">
                   <div className={`w-2 h-2 rounded-full ${category.color}`} />
                   {category.name}
+                </div>
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+
+        <Select value={selectedPriority} onValueChange={(value: Priority) => setSelectedPriority(value)}>
+          <SelectTrigger className="w-24">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            {Object.entries(PRIORITY_CONFIG).map(([priority, config]) => (
+              <SelectItem key={priority} value={priority}>
+                <div className="flex items-center gap-2">
+                  <div className={`w-2 h-2 rounded-full ${config.color}`} />
+                  {config.label}
                 </div>
               </SelectItem>
             ))}

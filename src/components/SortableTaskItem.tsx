@@ -1,29 +1,74 @@
-import { Trash2 } from '@phosphor-icons/react';
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
+import { DotsSixVertical, Trash2 } from '@phosphor-icons/react';
 import { Task, Category, PRIORITY_CONFIG } from '@/lib/types';
 import { Card } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
-interface TaskItemProps {
+interface SortableTaskItemProps {
   task: Task;
   category: Category | undefined;
   onToggle: (id: string) => void;
   onDelete: (id: string) => void;
+  isDragDisabled?: boolean;
 }
 
-export function TaskItem({ task, category, onToggle, onDelete }: TaskItemProps) {
-  const priorityConfig = PRIORITY_CONFIG[task.priority];
+export function SortableTaskItem({ 
+  task, 
+  category, 
+  onToggle, 
+  onDelete, 
+  isDragDisabled = false 
+}: SortableTaskItemProps) {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({
+    id: task.id,
+    disabled: isDragDisabled,
+  });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  };
+
+  const priorityConfig = PRIORITY_CONFIG[task.priority || 'medium'];
   
   return (
-    <div className="animate-in fade-in slide-in-from-left-4 duration-200">
+    <div 
+      ref={setNodeRef}
+      style={style}
+      className={cn(
+        "animate-in fade-in slide-in-from-left-4 duration-200",
+        isDragging && "opacity-50 z-50"
+      )}
+    >
       <Card className={cn(
         "p-4 transition-all hover:shadow-md border-l-4",
         task.completed && "opacity-60",
-        `border-l-${priorityConfig.color.replace('bg-', '')}`
+        task.priority === 'high' && "border-l-red-500",
+        task.priority === 'medium' && "border-l-yellow-500", 
+        task.priority === 'low' && "border-l-green-500",
+        !task.priority && "border-l-gray-300"
       )}>
         <div className="flex items-center gap-3">
+          {!isDragDisabled && (
+            <button
+              className="text-muted-foreground hover:text-foreground transition-colors cursor-grab active:cursor-grabbing"
+              {...attributes}
+              {...listeners}
+            >
+              <DotsSixVertical size={16} />
+            </button>
+          )}
+          
           <Checkbox
             checked={task.completed}
             onCheckedChange={() => onToggle(task.id)}

@@ -12,7 +12,7 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
-import { TaskItem } from './TaskItem';
+import { SortableTaskItem } from './SortableTaskItem';
 import { Task, Category } from '@/lib/types';
 
 interface SortableTaskListProps {
@@ -85,7 +85,7 @@ export function SortableTaskList({
       >
         <div className="space-y-2">
           {tasks.map((task) => (
-            <TaskItem
+            <SortableTaskItem
               key={task.id}
               task={task}
               category={getCategoryById(task.category)}
