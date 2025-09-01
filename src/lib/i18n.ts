@@ -105,6 +105,25 @@ export interface Translations {
   'theme.dark': string;
   'theme.system': string;
   'theme.toggleTheme': string;
+  
+  // Category Management
+  addNewCategory: string;
+  categoryName: string;
+  enterCategoryName: string;
+  categoryColor: string;
+  categoryIcon: string;
+  preview: string;
+  categoryPreview: string;
+  updateCategory: string;
+  update: string;
+  cancel: string;
+  addCategory: string;
+  add: string;
+  existingCategories: string;
+  noCategories: string;
+  task: string;
+  tasks: string;
+  default: string;
 }
 
 export const translations: Record<string, Translations> = {
@@ -215,6 +234,25 @@ export const translations: Record<string, Translations> = {
     'theme.dark': "Dark",
     'theme.system': "System",
     'theme.toggleTheme': "Toggle theme",
+    
+    // Category Management
+    addNewCategory: "Add New Category",
+    categoryName: "Category Name",
+    enterCategoryName: "Enter category name",
+    categoryColor: "Category Color",
+    categoryIcon: "Category Icon",
+    preview: "Preview",
+    categoryPreview: "This is how your category will appear",
+    updateCategory: "Update Category",
+    update: "Update",
+    cancel: "Cancel",
+    addCategory: "Add Category",
+    add: "Add",
+    existingCategories: "Existing Categories",
+    noCategories: "No categories yet. Create your first one!",
+    task: "task",
+    tasks: "tasks",
+    default: "Default",
     
     // Achievements and Milestones
     firstFiveTasks: "First Five",
@@ -345,6 +383,25 @@ export const translations: Record<string, Translations> = {
     'theme.dark': "Oscuro",
     'theme.system': "Sistema",
     'theme.toggleTheme': "Cambiar tema",
+    
+    // Category Management
+    addNewCategory: "Agregar Nueva Categoría",
+    categoryName: "Nombre de Categoría",
+    enterCategoryName: "Ingresa el nombre de la categoría",
+    categoryColor: "Color de Categoría",
+    categoryIcon: "Icono de Categoría",
+    preview: "Vista Previa",
+    categoryPreview: "Así es como aparecerá tu categoría",
+    updateCategory: "Actualizar Categoría",
+    update: "Actualizar",
+    cancel: "Cancelar",
+    addCategory: "Agregar Categoría",
+    add: "Agregar",
+    existingCategories: "Categorías Existentes",
+    noCategories: "No hay categorías aún. ¡Crea tu primera!",
+    task: "tarea",
+    tasks: "tareas",
+    default: "Por defecto",
     
     // Achievements and Milestones
     firstFiveTasks: "Primeras Cinco",
