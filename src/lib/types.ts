@@ -105,24 +105,36 @@ export const CATEGORY_COLORS = [
   'bg-amber-500'
 ];
 
-// Available icons for custom categories
+// Available icons for custom categories - Simplified and verified list
 export const CATEGORY_ICONS = [
   'User',
   'Briefcase',
-  'ShoppingCart',
+  'ShoppingCart', 
   'Heart',
   'List',
-  'BookOpen',
+  'Book',
   'Car',
-  'Home',
-  'Music',
+  'House',
+  'MusicNote',
   'Camera',
   'GameController',
-  'Dumbbell',
+  'Barbell', 
   'Coffee',
   'Airplane',
   'Gift',
-  'Star'
+  'Star',
+  'Folder',
+  'CalendarBlank',
+  'Clock',
+  'MapPin',
+  'Phone',
+  'Envelope',
+  'Gear',
+  'Palette',
+  'LightbulbFilament',
+  'Target',
+  'Trophy',
+  'Rocket'
 ];
 
 export const PRIORITY_CONFIG = {

@@ -112,6 +112,7 @@ export interface Translations {
   enterCategoryName: string;
   categoryColor: string;
   categoryIcon: string;
+  selectIconForCategory: string;
   preview: string;
   categoryPreview: string;
   updateCategory: string;
@@ -241,6 +242,7 @@ export const translations: Record<string, Translations> = {
     enterCategoryName: "Enter category name",
     categoryColor: "Category Color",
     categoryIcon: "Category Icon",
+    selectIconForCategory: "Choose an icon for your category",
     preview: "Preview",
     categoryPreview: "This is how your category will appear",
     updateCategory: "Update Category",
@@ -390,6 +392,7 @@ export const translations: Record<string, Translations> = {
     enterCategoryName: "Ingresa el nombre de la categoría",
     categoryColor: "Color de Categoría",
     categoryIcon: "Icono de Categoría",
+    selectIconForCategory: "Elige un icono para tu categoría",
     preview: "Vista Previa",
     categoryPreview: "Así es como aparecerá tu categoría",
     updateCategory: "Actualizar Categoría",

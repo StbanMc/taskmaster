@@ -1,5 +1,6 @@
 import { Trash, Calendar, Clock, Square, CheckSquare } from '@phosphor-icons/react';
 import { Task, Category, getPriorityConfig, formatDate, isTaskOverdue } from '@/lib/types';
+import { getSafeIcon } from '@/lib/icon-validator';
 import { Card } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
@@ -31,6 +32,11 @@ export function TaskItem({
   const { t } = useI18n();
   const priorityConfig = getPriorityConfig(task.priority);
   const overdue = isTaskOverdue(task);
+  
+  const renderCategoryIcon = (iconName: string) => {
+    const IconComponent = getSafeIcon(iconName);
+    return <IconComponent className="w-3 h-3 text-white drop-shadow-sm" weight="regular" />;
+  };
   
   return (
     <motion.div 
@@ -112,7 +118,12 @@ export function TaskItem({
                 {category && (
                   <>
                     <span className="text-[10px] md:text-xs text-muted-foreground">•</span>
-                    <span className="text-[10px] md:text-xs text-muted-foreground">{category.name}</span>
+                    <div className="flex items-center gap-1">
+                      <div className={cn("w-3 h-3 rounded-sm flex items-center justify-center", category.color)}>
+                        {renderCategoryIcon(category.icon)}
+                      </div>
+                      <span className="text-[10px] md:text-xs text-muted-foreground">{category.name}</span>
+                    </div>
                   </>
                 )}
                 {task.dueDate && (

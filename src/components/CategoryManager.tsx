@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Category, CATEGORY_COLORS, CATEGORY_ICONS } from '@/lib/types';
+import { getSafeIcon } from '@/lib/icon-validator';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -8,7 +9,6 @@ import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { FolderOpen, Plus, Trash, Pencil } from '@phosphor-icons/react';
-import * as Icons from '@phosphor-icons/react';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { useI18n } from '@/contexts/I18nContext';
@@ -86,9 +86,10 @@ export const CategoryManager = ({ categories, onUpdateCategories, tasks }: Categ
   };
 
   const renderIcon = (iconName: string, className = "w-4 h-4", forceColor?: string) => {
-    const IconComponent = (Icons as any)[iconName];
-    const iconClass = forceColor ? `${className} ${forceColor}` : `${className}`;
-    return IconComponent ? <IconComponent className={iconClass} /> : <Icons.List className={iconClass} />;
+    const IconComponent = getSafeIcon(iconName);
+    const iconClass = forceColor ? `${className} ${forceColor}` : `${className} text-current`;
+    
+    return <IconComponent className={iconClass} weight="regular" />;
   };
 
   return (
@@ -156,37 +157,57 @@ export const CategoryManager = ({ categories, onUpdateCategories, tasks }: Categ
                 </div>
 
                 {/* Icon Picker */}
-                <div className="space-y-2 lg:col-span-1 xl:col-span-1">
+                <div className="space-y-3 lg:col-span-1 xl:col-span-1">
                   <Label className="text-sm font-medium">{t('categoryIcon')}</Label>
-                  <div className="grid grid-cols-8 gap-1.5 max-h-32 sm:max-h-40 overflow-y-auto border rounded-lg p-2 sm:p-3 bg-muted/30">
-                    {CATEGORY_ICONS.map(icon => (
-                      <button
-                        key={icon}
-                        className={cn(
-                          "aspect-square p-1.5 sm:p-2 rounded-md border transition-all hover:scale-110 flex items-center justify-center",
-                          formData.icon === icon 
-                            ? "border-primary bg-primary/15 scale-105 shadow-sm text-primary" 
-                            : "border-border bg-card hover:border-primary/40 text-muted-foreground hover:text-foreground hover:bg-muted/50"
-                        )}
-                        onClick={() => setFormData({ ...formData, icon })}
-                        title={icon}
-                      >
-                        {renderIcon(icon, "w-3 h-3 sm:w-4 sm:h-4")}
-                      </button>
-                    ))}
+                  <div className="p-4 border-2 border-dashed border-muted-foreground/25 rounded-xl bg-muted/20 hover:bg-muted/30 transition-colors">
+                    <div className="grid grid-cols-5 sm:grid-cols-6 lg:grid-cols-4 xl:grid-cols-6 gap-3 max-h-40 overflow-y-auto">
+                      {CATEGORY_ICONS.map(icon => {
+                        const isSelected = formData.icon === icon;
+                        return (
+                          <div key={icon} className="relative group">
+                            <button
+                              className={cn(
+                                "relative w-10 h-10 sm:w-12 sm:h-12 rounded-xl border-2 transition-all duration-300 flex items-center justify-center",
+                                "hover:scale-110 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary/50",
+                                isSelected 
+                                  ? "border-primary bg-primary text-primary-foreground shadow-xl scale-110 ring-2 ring-primary/30" 
+                                  : "border-border bg-background text-foreground hover:border-primary/40 hover:bg-primary/5 hover:text-primary"
+                              )}
+                              onClick={() => setFormData({ ...formData, icon })}
+                              title={icon}
+                              type="button"
+                            >
+                              {renderIcon(icon, "w-5 h-5 sm:w-6 sm:h-6")}
+                            </button>
+                            
+                            {/* Tooltip */}
+                            <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 px-2 py-1 bg-popover border border-border text-popover-foreground text-xs rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity z-20 whitespace-nowrap pointer-events-none">
+                              {icon}
+                              <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1 border-4 border-transparent border-b-popover"></div>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
+                  <p className="text-xs text-muted-foreground text-center">
+                    {t('selectIconForCategory')}
+                  </p>
                 </div>
               </div>
 
               {/* Preview Section */}
-              <div className="space-y-2 pt-3 border-t">
+              <div className="space-y-3 pt-4 border-t bg-muted/20 rounded-lg p-4">
                 <Label className="text-sm font-medium">{t('preview')}</Label>
-                <div className="flex items-center gap-3">
-                  <Badge className={cn(formData.color, "text-white gap-2 px-3 py-1.5 text-sm font-medium shadow-sm")}>
-                    {renderIcon(formData.icon, "w-4 h-4", "text-white")}
+                <div className="flex items-center gap-4">
+                  <Badge className={cn(
+                    formData.color, 
+                    "text-white gap-2 px-4 py-2 text-sm font-medium shadow-lg border-0 transition-all hover:scale-105"
+                  )}>
+                    {renderIcon(formData.icon, "w-4 h-4", "text-white drop-shadow-sm")}
                     {formData.name || t('categoryName')}
                   </Badge>
-                  <span className="text-muted-foreground text-xs sm:text-sm">
+                  <span className="text-muted-foreground text-xs sm:text-sm italic">
                     {t('categoryPreview')}
                   </span>
                 </div>
@@ -259,10 +280,10 @@ export const CategoryManager = ({ categories, onUpdateCategories, tasks }: Categ
                         <div className="flex items-center justify-between gap-2">
                           <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
                             <div className={cn(
-                              "p-1.5 sm:p-2.5 rounded-lg shadow-sm flex-shrink-0", 
+                              "p-2 sm:p-2.5 rounded-lg shadow-sm flex-shrink-0 flex items-center justify-center", 
                               category.color
                             )}>
-                              {renderIcon(category.icon, "w-3 h-3 sm:w-4 sm:h-4", "text-white")}
+                              {renderIcon(category.icon, "w-4 h-4 sm:w-5 sm:h-5", "text-white drop-shadow-sm")}
                             </div>
                             <div className="space-y-0.5 min-w-0 flex-1">
                               <h4 className="font-semibold text-xs sm:text-sm truncate">

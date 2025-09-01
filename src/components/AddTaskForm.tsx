@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Plus, Calendar, AlignLeft, Star } from '@phosphor-icons/react';
+import { getSafeIcon } from '@/lib/icon-validator';
 import { Task, Category, Priority, PRIORITY_CONFIG, TaskTemplate } from '@/lib/types';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -28,6 +29,11 @@ export function AddTaskForm({ onAddTask, categories, templates, onQuickAdd }: Ad
   const [dueDate, setDueDate] = useState('');
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [showTemplates, setShowTemplates] = useState(false);
+
+  const renderIcon = (iconName: string) => {
+    const IconComponent = getSafeIcon(iconName);
+    return <IconComponent className="w-3 h-3 text-white drop-shadow-sm" weight="regular" />;
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -108,7 +114,9 @@ export function AddTaskForm({ onAddTask, categories, templates, onQuickAdd }: Ad
                   {categories.map((category) => (
                     <SelectItem key={category.id} value={category.id}>
                       <div className="flex items-center gap-2">
-                        <div className={`w-2 h-2 rounded-full ${category.color}`} />
+                        <div className={`w-4 h-4 rounded-md flex items-center justify-center ${category.color}`}>
+                          {renderIcon(category.icon)}
+                        </div>
                         <span className="truncate">{getCategoryName(category.id, t)}</span>
                       </div>
                     </SelectItem>
