@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { ChevronDown, ChevronRight, CheckCircle } from '@phosphor-icons/react';
 import { useI18n } from '@/contexts/I18nContext';
+import { AnimatePresence, motion } from 'framer-motion';
 
 interface TaskListProps {
   tasks: Task[];
@@ -100,18 +101,27 @@ export function TaskList({
               </Button>
             </CollapsibleTrigger>
             <CollapsibleContent className="space-y-2 mt-3">
-              {completedTasks.map((task) => (
-                <TaskItem
-                  key={task.id}
-                  task={task}
-                  category={getCategoryById(task.category)}
-                  onToggle={onToggleTask}
-                  onDelete={onDeleteTask}
-                  isSelected={selectedTasks.includes(task.id)}
-                  onSelectToggle={onSelectTask}
-                  showSelectMode={showSelectMode}
-                />
-              ))}
+              <AnimatePresence>
+                {completedTasks.map((task) => (
+                  <motion.div
+                    key={task.id}
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <TaskItem
+                      task={task}
+                      category={getCategoryById(task.category)}
+                      onToggle={onToggleTask}
+                      onDelete={onDeleteTask}
+                      isSelected={selectedTasks.includes(task.id)}
+                      onSelectToggle={onSelectTask}
+                      showSelectMode={showSelectMode}
+                    />
+                  </motion.div>
+                ))}
+              </AnimatePresence>
             </CollapsibleContent>
           </Collapsible>
         </div>

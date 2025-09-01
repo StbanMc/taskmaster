@@ -1,11 +1,13 @@
-import { Trash, Calendar, Clock, Square, CheckSquare } from '@phosphor-icons/react';
+import { TrashSimple, Calendar, Clock, Square, CheckSquare } from '@phosphor-icons/react';
 import { Task, Category, getPriorityConfig, formatDate, isTaskOverdue } from '@/lib/types';
 import { Card } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { AnimatedCheckbox } from '@/components/AnimatedCheckbox';
 import { cn } from '@/lib/utils';
 import { useI18n } from '@/contexts/I18nContext';
+import { motion } from 'framer-motion';
 
 interface TaskItemProps {
   task: Task;
@@ -31,7 +33,14 @@ export function TaskItem({
   const overdue = isTaskOverdue(task);
   
   return (
-    <div className="animate-in fade-in slide-in-from-left-4 duration-200">
+    <motion.div 
+      className="animate-in fade-in slide-in-from-left-4 duration-200"
+      initial={{ opacity: 0, x: -20 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: 20 }}
+      transition={{ duration: 0.3 }}
+      layout
+    >
       <Card className={cn(
         "p-4 transition-all hover:shadow-md border-l-4",
         task.completed && "opacity-60",
@@ -52,10 +61,11 @@ export function TaskItem({
             </Button>
           )}
           
-          <Checkbox
+          <AnimatedCheckbox
             checked={task.completed}
-            onCheckedChange={() => onToggle(task.id)}
-            className="data-[state=checked]:bg-accent data-[state=checked]:border-accent mt-0.5"
+            onChange={() => onToggle(task.id)}
+            size="md"
+            className="mt-0.5"
           />
           
           <div className="flex-1 min-w-0">
@@ -126,12 +136,12 @@ export function TaskItem({
                 className="h-8 w-8 p-0 text-muted-foreground hover:text-destructive flex-shrink-0"
                 aria-label={t('deleteTask')}
               >
-                <Trash size={14} className="shrink-0" />
+                <TrashSimple size={14} className="shrink-0" />
               </Button>
             </div>
           </div>
         </div>
       </Card>
-    </div>
+    </motion.div>
   );
 }

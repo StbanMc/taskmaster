@@ -15,6 +15,8 @@ import { NotificationSettingsDialog } from '@/components/NotificationSettingsDia
 import { NotificationButton } from '@/components/NotificationButton';
 import { LanguageSelector } from '@/components/LanguageSelector';
 import { ThemeToggle } from '@/components/ThemeToggle';
+import { TaskCompletionAnimation } from '@/components/TaskCompletionAnimation';
+import { CompletionMilestone } from '@/components/CompletionMilestone';
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
 import { CheckCircle, MagnifyingGlass } from '@phosphor-icons/react';
@@ -36,6 +38,8 @@ function TaskFlowApp() {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [selectedTasks, setSelectedTasks] = useState<string[]>([]);
   const [isSelectMode, setIsSelectMode] = useState(false);
+  const [showCompletionAnimation, setShowCompletionAnimation] = useState(false);
+  const [completedTaskTitle, setCompletedTaskTitle] = useState('');
   const [searchFilters, setSearchFilters] = useState<SearchFilters>({
     search: '',
     priority: undefined,
@@ -110,6 +114,9 @@ function TaskFlowApp() {
             completedAt: !task.completed ? Date.now() : undefined
           };
           if (updated.completed) {
+            // Show completion animation for the task
+            setCompletedTaskTitle(task.title);
+            setShowCompletionAnimation(true);
             toast.success(t('taskCompletedSuccess'));
           } else {
             toast.info(t('taskIncomplete'));
@@ -388,6 +395,13 @@ function TaskFlowApp() {
 
         {/* Task Statistics */}
         <TaskStats tasks={tasks} />
+        
+        {/* Completion Milestones */}
+        {tasks.length > 0 && (
+          <div className="mb-6">
+            <CompletionMilestone tasks={tasks} />
+          </div>
+        )}
 
         {/* Add Task Form */}
         <div className="mb-6">
@@ -482,6 +496,13 @@ function TaskFlowApp() {
         />
       </div>
       <Toaster position="bottom-center" />
+      
+      {/* Task Completion Animation */}
+      <TaskCompletionAnimation
+        isVisible={showCompletionAnimation}
+        taskTitle={completedTaskTitle}
+        onComplete={() => setShowCompletionAnimation(false)}
+      />
     </div>
   );
 }

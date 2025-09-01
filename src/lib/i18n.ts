@@ -208,7 +208,28 @@ export const translations: Record<string, Translations> = {
     'theme.light': "Light",
     'theme.dark': "Dark",
     'theme.system': "System",
-    'theme.toggleTheme': "Toggle theme"
+    'theme.toggleTheme': "Toggle theme",
+    
+    // Achievements and Milestones
+    firstFiveTasks: "First Five",
+    completedFirstFiveTasks: "Completed your first 5 tasks",
+    taskMaster: "Task Master",
+    completed25Tasks: "Completed 25 tasks",
+    centurion: "Centurion",
+    completed100Tasks: "Completed 100 tasks",
+    consistentEffort: "Consistent Effort",
+    threeDayStreak: "Completed tasks for 3 days in a row",
+    weekWarrior: "Week Warrior",
+    sevenDayStreak: "Completed tasks for 7 days in a row",
+    categoryMaster: "{category} Master",
+    clearedAllTasksInCategory: "Cleared all {count} tasks in {category}",
+    priorityFocus: "{priority} Priority Focus",
+    completedAllPriorityTasks: "Completed all {count} {priority} priority tasks",
+    achievements: "Achievements",
+    inProgress: "In Progress",
+    newAchievement: "New Achievement",
+    taskCompleted: "Task Completed",
+    hasBeenCompleted: "has been completed"
   },
   
   es: {
@@ -314,7 +335,28 @@ export const translations: Record<string, Translations> = {
     'theme.light': "Claro",
     'theme.dark': "Oscuro",
     'theme.system': "Sistema",
-    'theme.toggleTheme': "Cambiar tema"
+    'theme.toggleTheme': "Cambiar tema",
+    
+    // Achievements and Milestones
+    firstFiveTasks: "Primeras Cinco",
+    completedFirstFiveTasks: "Completaste tus primeras 5 tareas",
+    taskMaster: "Maestro de Tareas",
+    completed25Tasks: "Completaste 25 tareas",
+    centurion: "Centurión",
+    completed100Tasks: "Completaste 100 tareas",
+    consistentEffort: "Esfuerzo Constante",
+    threeDayStreak: "Completaste tareas por 3 días seguidos",
+    weekWarrior: "Guerrero Semanal",
+    sevenDayStreak: "Completaste tareas por 7 días seguidos",
+    categoryMaster: "Maestro de {category}",
+    clearedAllTasksInCategory: "Completaste todas las {count} tareas de {category}",
+    priorityFocus: "Enfoque en Prioridad {priority}",
+    completedAllPriorityTasks: "Completaste todas las {count} tareas de prioridad {priority}",
+    achievements: "Logros",
+    inProgress: "En Progreso",
+    newAchievement: "Nuevo Logro",
+    taskCompleted: "Tarea Completada",
+    hasBeenCompleted: "ha sido completada"
   }
 };
 

@@ -7,7 +7,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { Settings, Plus, Trash, Edit } from '@phosphor-icons/react';
+import { Settings, Plus, TrashSimple, Edit } from '@phosphor-icons/react';
 import * as Icons from '@phosphor-icons/react';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
@@ -241,7 +241,7 @@ export const CategoryManager = ({ categories, onUpdateCategories, tasks }: Categ
                               onClick={() => handleDeleteCategory(category.id)}
                               className="text-destructive hover:text-destructive"
                             >
-                              <Trash className="w-3 h-3" />
+                              <TrashSimple className="w-3 h-3" />
                             </Button>
                           )}
                         </div>
