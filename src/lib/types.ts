@@ -16,14 +16,113 @@ export interface Category {
   id: string;
   name: string;
   color: string;
+  icon: string; // Phosphor icon name
+  isCustom?: boolean; // Track if user created this category
+}
+
+export interface TaskTemplate {
+  id: string;
+  title: string;
+  description?: string;
+  category: string;
+  priority: Priority;
+  estimatedDuration?: number; // in minutes
+  tags?: string[];
+  isRecurring?: boolean;
+  recurringType?: 'daily' | 'weekly' | 'monthly';
+  createdAt: number;
 }
 
 export const DEFAULT_CATEGORIES: Category[] = [
-  { id: 'personal', name: 'Personal', color: 'bg-blue-500' },
-  { id: 'work', name: 'Work', color: 'bg-purple-500' },
-  { id: 'shopping', name: 'Shopping', color: 'bg-green-500' },
-  { id: 'health', name: 'Health', color: 'bg-red-500' },
-  { id: 'general', name: 'General', color: 'bg-gray-500' }
+  { id: 'personal', name: 'Personal', color: 'bg-blue-500', icon: 'User' },
+  { id: 'work', name: 'Work', color: 'bg-purple-500', icon: 'Briefcase' },
+  { id: 'shopping', name: 'Shopping', color: 'bg-green-500', icon: 'ShoppingCart' },
+  { id: 'health', name: 'Health', color: 'bg-red-500', icon: 'Heart' },
+  { id: 'general', name: 'General', color: 'bg-gray-500', icon: 'List' }
+];
+
+export const DEFAULT_TEMPLATES: TaskTemplate[] = [
+  {
+    id: 'daily-standup',
+    title: 'Daily Team Standup',
+    description: 'Attend daily team standup meeting',
+    category: 'work',
+    priority: 'medium',
+    estimatedDuration: 15,
+    isRecurring: true,
+    recurringType: 'daily',
+    createdAt: Date.now()
+  },
+  {
+    id: 'workout',
+    title: 'Workout Session',
+    description: 'Complete daily workout routine',
+    category: 'health',
+    priority: 'high',
+    estimatedDuration: 60,
+    tags: ['exercise', 'fitness'],
+    isRecurring: true,
+    recurringType: 'daily',
+    createdAt: Date.now()
+  },
+  {
+    id: 'grocery-shopping',
+    title: 'Grocery Shopping',
+    description: 'Buy weekly groceries',
+    category: 'shopping',
+    priority: 'medium',
+    estimatedDuration: 90,
+    isRecurring: true,
+    recurringType: 'weekly',
+    createdAt: Date.now()
+  },
+  {
+    id: 'weekly-review',
+    title: 'Weekly Review',
+    description: 'Review weekly goals and progress',
+    category: 'personal',
+    priority: 'medium',
+    estimatedDuration: 30,
+    isRecurring: true,
+    recurringType: 'weekly',
+    createdAt: Date.now()
+  }
+];
+
+// Available colors for custom categories
+export const CATEGORY_COLORS = [
+  'bg-blue-500',
+  'bg-purple-500',
+  'bg-green-500',
+  'bg-red-500',
+  'bg-yellow-500',
+  'bg-pink-500',
+  'bg-indigo-500',
+  'bg-orange-500',
+  'bg-teal-500',
+  'bg-cyan-500',
+  'bg-lime-500',
+  'bg-amber-500'
+];
+
+// Available icons for custom categories
+export const CATEGORY_ICONS = [
+  'User',
+  'Briefcase',
+  'ShoppingCart',
+  'Heart',
+  'List',
+  'BookOpen',
+  'Car',
+  'Home',
+  'Music',
+  'Camera',
+  'GameController',
+  'Dumbbell',
+  'Coffee',
+  'Airplane',
+  'Gift',
+  'Star'
 ];
 
 export const PRIORITY_CONFIG = {

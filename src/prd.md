@@ -1,18 +1,18 @@
 # TaskFlow - Task Management Application PRD
 
 ## Core Purpose & Success
-- **Mission Statement**: TaskFlow provides comprehensive task management with advanced search, filtering, analytics, bulk operations, and data export capabilities, creating a professional-grade productivity solution.
-- **Success Indicators**: Users can quickly add tasks with priorities, organize them by categories, reorder through intuitive drag-and-drop, and track completion progress.
-- **Experience Qualities**: Clean, Intuitive, Productive
+- **Mission Statement**: TaskFlow provides comprehensive task management with templates, keyboard shortcuts, custom categories, analytics, and data export, creating a professional-grade productivity solution that accelerates task creation and organization.
+- **Success Indicators**: Users can quickly create tasks from templates, navigate efficiently with keyboard shortcuts, organize tasks in personalized categories with custom colors and icons, and maintain high productivity through streamlined workflows.
+- **Experience Qualities**: Efficient, Customizable, Professional
 
 ## Project Classification & Approach
-- **Complexity Level**: Complex Application (advanced functionality with comprehensive feature set)
-- **Primary User Activity**: Creating, organizing, searching, and analyzing personal task management with productivity insights
+- **Complexity Level**: Complex Application (advanced functionality with power-user features)
+- **Primary User Activity**: Creating, organizing, templating, and analyzing personal task management with advanced customization and automation
 
 ## Essential Features
 
-### Enhanced Task Management
-- **Add Tasks**: Users can create new tasks with titles, descriptions, due dates, assign categories, and set priority levels
+### Core Task Management
+- **Add Tasks**: Create new tasks with titles, descriptions, due dates, categories, and priority levels
 - **Task Priorities**: Three-level priority system (High, Medium, Low) with visual color indicators
 - **Due Dates**: Optional due dates with overdue indicators and smart sorting by urgency
 - **Task Descriptions**: Optional detailed descriptions for additional context
@@ -21,14 +21,42 @@
 - **Drag & Drop Reordering**: Reorder pending tasks by dragging them into preferred sequence
 - **Bulk Operations**: Select multiple tasks for bulk completion, reopening, or deletion
 
+### ✨ Task Templates (New)
+- **Pre-built Templates**: Default templates for common recurring activities (daily standup, workout, grocery shopping, weekly review)
+- **Template Categories**: Templates organized by category with proper icon and color associations  
+- **Template Details**: Templates include title, description, category, priority, estimated duration, and recurring type
+- **Template Selection**: Visual template picker with category filtering and template previews
+- **Quick Template Access**: Templates accessible via dedicated button and keyboard shortcut (Ctrl+T)
+- **Recurring Templates**: Templates marked as daily, weekly, or monthly recurring activities
+- **Template Metadata**: Templates include tags, estimated duration, and creation timestamps
+
+### 🎨 Custom Categories (New)
+- **Custom Category Creation**: Users can create personalized categories beyond default ones
+- **Category Icons**: 16 available Phosphor icons (User, Briefcase, ShoppingCart, Heart, etc.) for visual distinction
+- **Category Colors**: 12 color options using Tailwind color classes for visual organization
+- **Category Management**: Full CRUD operations for custom categories with validation
+- **Category Usage Tracking**: Prevent deletion of categories that contain tasks
+- **Icon Integration**: Categories display with both color and icon throughout the interface
+- **Category Migration**: Automatic migration of existing categories to include icon support
+
+### ⌨️ Keyboard Shortcuts (New)
+- **Quick Task Creation**: Ctrl+N to focus on new task input field
+- **Search Focus**: / key to focus on search input
+- **Template Access**: Ctrl+T to open template picker
+- **Select All**: Ctrl+A to select all visible tasks
+- **Clear Everything**: Escape to clear selection and filters
+- **Category Quick Access**: Alt+1-5 to filter by default categories (Personal, Work, Shopping, Health, General)
+- **Keyboard Help**: Dedicated shortcuts help dialog showing all available shortcuts
+- **Context Awareness**: Shortcuts disabled when typing in input fields
+
 ### Advanced Organization & Search
-- **Category System**: Pre-defined categories (Personal, Work, Shopping, Health, General) with color coding
-- **Priority System**: High (red), Medium (yellow), Low (green) priorities with color-coded indicators
+- **Enhanced Category System**: Default + custom categories with icons and colors
+- **Priority System**: High (red), Medium (yellow), Low (green) priorities with color indicators
 - **Smart Search**: Full-text search through task titles and descriptions
 - **Advanced Filtering**: Filter by priority, due date, completion status, and overdue tasks
-- **Category Filtering**: View tasks by specific categories or see all tasks
+- **Category Filtering**: View tasks by specific categories with icon/color display
 - **Intelligent Sorting**: Automatic sorting by urgency (combines priority and due date proximity)
-- **Task Counters**: Display pending task counts per category
+- **Task Counters**: Display pending task counts per category with visual indicators
 
 ### Analytics & Insights
 - **Task Statistics**: Completion rate tracking with progress visualization
@@ -36,90 +64,73 @@
 - **Due Date Tracking**: Tasks due today, tomorrow, and overdue with visual indicators
 - **Priority Breakdown**: Visual distribution of pending tasks by priority level
 - **Progress Monitoring**: Real-time updates on completion percentages
+- **Template Analytics**: Track usage of different templates over time
 
 ### Data Management
 - **Export Functionality**: Export task data in CSV, JSON, or readable text formats
-- **Persistent Storage**: All tasks and preferences saved using useKV for cross-session persistence
-- **Data Migration**: Automatic upgrading of existing task data to include new fields
+- **Template Storage**: Persistent storage of custom and default templates
+- **Category Storage**: Persistent storage of custom categories with icons and colors
+- **Cross-session Persistence**: All data saved using useKV for reliable data retention
+- **Data Migration**: Automatic upgrading of existing data to support new features
 - **Bulk Selection**: Multi-task selection with keyboard and mouse support
 
-### User Experience
-- **Visual Feedback**: Toast notifications for all actions (add, complete, delete, reorder, export)
-- **Responsive Design**: Works seamlessly across desktop and mobile devices
-- **Accessibility**: Keyboard navigation support for drag-and-drop operations and bulk selection
-- **Smart Defaults**: Intelligent default values for new tasks and reasonable migration of existing data
-- **Empty States**: Helpful guidance when no tasks match current filters or searches
+### User Experience Enhancements
+- **Visual Feedback**: Toast notifications for all actions with contextual messages
+- **Responsive Design**: Optimized experience across desktop and mobile devices
+- **Accessibility**: Comprehensive keyboard navigation and screen reader support
+- **Smart Defaults**: Intelligent default values and seamless data migration
+- **Help Integration**: Built-in keyboard shortcuts reference and category management guidance
+- **Progressive Disclosure**: Advanced features accessible but not overwhelming
 
 ## Design Direction
 
 ### Visual Tone & Identity
-- **Emotional Response**: Users should feel organized, productive, and in control
-- **Design Personality**: Clean, modern, professional yet approachable
-- **Visual Metaphors**: Card-based layout representing individual tasks, with priority color bars and subtle shadows for depth
-- **Simplicity Spectrum**: Minimal interface that prioritizes content and functionality
+- **Emotional Response**: Professional efficiency with personalized touches through custom colors and icons
+- **Design Personality**: Clean, modern, and highly functional with subtle visual hierarchy
+- **Visual Metaphors**: Task completion checkmarks, category organization, and template reuse concepts
+- **Simplicity Spectrum**: Sophisticated interface that reveals power features progressively
 
 ### Color Strategy
-- **Color Scheme Type**: Monochromatic with accent colors for categories and priorities
-- **Primary Color**: Deep blue (oklch(0.45 0.15 240)) for trust and productivity
-- **Secondary Colors**: Soft blue-gray for supporting elements
-- **Accent Color**: Fresh green (oklch(0.7 0.15 150)) for positive actions
-- **Priority Colors**: 
-  - High: Red (oklch(0.65 0.2 20)) for urgency
-  - Medium: Yellow (oklch(0.75 0.15 60)) for moderate importance
-  - Low: Green (oklch(0.65 0.15 140)) for low urgency
-- **Category Colors**: Distinct colors (blue, purple, green, red, gray) for visual organization
-- **Color Accessibility**: All color combinations meet WCAG AA contrast ratios
+- **Color Scheme Type**: Extended palette with user customization
+- **Primary Color**: Deep blue (oklch(0.45 0.15 240)) for trustworthy, professional feel
+- **Secondary Colors**: Muted blue-gray tones for supporting elements
+- **Accent Color**: Fresh green (oklch(0.7 0.15 150)) for positive actions and completion
+- **Category Colors**: 12 distinct colors for user customization
+- **Color Psychology**: Blue conveys trust and productivity, green represents completion and growth
 
 ### Typography System
-- **Font Pairing Strategy**: Inter font family for clean, modern readability
-- **Typographic Hierarchy**: Clear distinction between headings, task titles, priority labels, and metadata
-- **Font Personality**: Professional, readable, friendly
-- **Legibility Check**: Inter provides excellent legibility at all sizes
+- **Font Pairing Strategy**: Single font family (Inter) with varied weights for hierarchy
+- **Primary Font**: Inter - clean, highly legible, professional sans-serif
+- **Typographic Hierarchy**: Bold headers (700), medium interface elements (500), regular body text (400)
+- **Typography Consistency**: Consistent sizing and spacing using Tailwind's type scale
+
+### Visual Hierarchy & Layout
+- **Attention Direction**: Template star icon, category colors/icons, priority indicators guide focus
+- **Grid System**: Responsive container with max-width constraints and consistent padding
+- **Component Density**: Balanced information density with generous spacing for complex features
+- **Progressive Disclosure**: Advanced features hidden behind clear, discoverable entry points
 
 ### UI Elements & Component Selection
-- **Cards**: Primary container for individual tasks with colored left borders indicating priority
-- **Priority Indicators**: Colored dots and left borders with text labels for clear priority identification
-- **Buttons**: Ghost buttons for actions, primary button for adding tasks
-- **Checkboxes**: Custom-styled for task completion with smooth animations
-- **Priority Selectors**: Dropdown with color-coded options in add task form
-- **Drag Handles**: Six-dot vertical icon indicating draggable elements
-- **Toasts**: Sonner integration for action feedback
+- **Enhanced Components**: Extended shadcn components with custom icons and color systems
+- **Template Integration**: Star button and template picker dialog for quick access
+- **Category Enhancement**: Color/icon combinations throughout filter buttons and task displays
+- **Keyboard Shortcuts**: Help dialog with organized shortcut groups and formatted key combinations
+- **Management Tools**: Settings-style dialogs for category and template management
 
-### Priority Visual System
-- **Color Coding**: Consistent color language across all priority indicators
-- **Border Accents**: Left border on task cards matches priority color
-- **Text Labels**: Priority level clearly displayed with matching text color
-- **Hierarchy**: High priority tasks automatically sorted to top of pending list
-
-### Drag & Drop Implementation
-- **Visual Feedback**: Dragged items show opacity reduction and elevation
-- **Constraints**: Only pending tasks can be reordered; completed tasks are static
-- **Touch Support**: Optimized for both mouse and touch interactions
-- **Keyboard Support**: Full keyboard navigation with sortable keyboard coordinates
-
-### Animations
-- **Task Interactions**: Smooth check/uncheck animations
-- **Priority Indicators**: Subtle highlight animations on priority changes
-- **Drag Feedback**: Visual lifting effect during drag operations
-- **List Updates**: Fade-in animations for new tasks
-- **State Changes**: Smooth transitions between different UI states
+### Accessibility & Readability
+- **Keyboard Navigation**: Comprehensive keyboard shortcuts with help documentation
+- **Color Independence**: Icons accompany all color-coded elements for accessibility
+- **Focus Management**: Clear focus states and logical tab order throughout complex interfaces
+- **Screen Reader Support**: Proper ARIA labels and semantic HTML structure
 
 ## Implementation Considerations
-- **Performance**: Efficient rendering with React hooks and memoization
-- **Data Persistence**: useKV hook ensures data survives browser sessions
-- **Error Handling**: Graceful fallbacks for drag-and-drop failures
-- **Migration**: Automatic addition of priority property to existing tasks (defaults to medium)
+- **Performance**: Template and category data cached locally with efficient filtering
+- **Scalability**: Keyboard shortcut system extensible for future feature additions
+- **Data Migration**: Seamless upgrade path for existing users to new features
+- **User Onboarding**: Progressive feature discovery without overwhelming new users
 
-## Edge Cases & Problem Scenarios
-- **Empty States**: Clear messaging when no tasks exist
-- **Category Filtering**: Proper handling when filtered view becomes empty
-- **Drag Conflicts**: Prevention of invalid drag operations
-- **Data Migration**: Seamless upgrading of existing task data structure for priority field
-- **Priority Defaults**: Reasonable defaults for new tasks and existing data
-
-## Accessibility & Usability
-- **Keyboard Navigation**: Full keyboard support for all interactions
-- **Screen Readers**: Proper ARIA labels and descriptions for priority levels
-- **Touch Targets**: Adequate size for mobile interaction (44px minimum)
-- **Visual Indicators**: Clear feedback for all user actions including priority changes
-- **Color Independence**: Priority information available through text labels, not just color
+## Success Metrics
+- **Efficiency Gains**: Reduced time to create common tasks through templates
+- **Customization Adoption**: Usage rates of custom categories and keyboard shortcuts
+- **User Retention**: Increased engagement through personalized workflow optimization
+- **Feature Discovery**: Analytics on template usage and shortcut adoption

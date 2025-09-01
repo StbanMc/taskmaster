@@ -1,6 +1,6 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
 import { useKV } from '@github/spark/hooks';
-import { Task, Category, Priority, DEFAULT_CATEGORIES, getTaskUrgency, isTaskOverdue } from '@/lib/types';
+import { Task, Category, Priority, DEFAULT_CATEGORIES, DEFAULT_TEMPLATES, TaskTemplate, getTaskUrgency, isTaskOverdue } from '@/lib/types';
 import { AddTaskForm } from '@/components/AddTaskForm';
 import { TaskList } from '@/components/TaskList';
 import { CategoryFilter } from '@/components/CategoryFilter';
@@ -8,13 +8,19 @@ import { TaskStats } from '@/components/TaskStats';
 import { TaskSearch, SearchFilters } from '@/components/TaskSearch';
 import { BulkActions } from '@/components/BulkActions';
 import { ExportData } from '@/components/ExportData';
+import { CategoryManager } from '@/components/CategoryManager';
+import { TemplateManager } from '@/components/TemplateManager';
+import { KeyboardShortcutsHelp } from '@/components/KeyboardShortcutsHelp';
 import { Separator } from '@/components/ui/separator';
-import { CheckCircle } from '@phosphor-icons/react';
+import { Button } from '@/components/ui/button';
+import { CheckCircle, MagnifyingGlass } from '@phosphor-icons/react';
 import { Toaster, toast } from 'sonner';
+import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
 
 function App() {
   const [tasks, setTasks] = useKV<Task[]>('taskflow-tasks', []);
-  const [categories] = useKV<Category[]>('taskflow-categories', DEFAULT_CATEGORIES);
+  const [categories, setCategories] = useKV<Category[]>('taskflow-categories', DEFAULT_CATEGORIES);
+  const [templates, setTemplates] = useKV<TaskTemplate[]>('taskflow-templates', DEFAULT_TEMPLATES);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [selectedTasks, setSelectedTasks] = useState<string[]>([]);
   const [isSelectMode, setIsSelectMode] = useState(false);
@@ -26,7 +32,9 @@ function App() {
     dueDateFilter: 'all'
   });
 
-  // Migrate existing tasks to include new fields
+  const searchInputRef = useRef<HTMLInputElement>(null);
+
+  // Migrate existing tasks and categories to include new fields
   useEffect(() => {
     if (tasks.length > 0) {
       const needsUpdate = tasks.some(task => 
@@ -47,7 +55,20 @@ function App() {
         );
       }
     }
-  }, [tasks, setTasks]);
+
+    if (categories.length > 0) {
+      const needsUpdate = categories.some(cat => !cat.icon);
+      
+      if (needsUpdate) {
+        setCategories(currentCategories => 
+          currentCategories.map(category => ({
+            ...category,
+            icon: category.icon || 'List' // Default icon
+          }))
+        );
+      }
+    }
+  }, [tasks, categories, setTasks, setCategories]);
 
   const addTask = (taskData: Omit<Task, 'id' | 'createdAt'>) => {
     const newTask: Task = {
@@ -212,6 +233,103 @@ function App() {
   const totalCount = tasks.length;
   const overdueCount = tasks.filter(task => isTaskOverdue(task)).length;
 
+  // Keyboard shortcuts
+  const activeShortcuts = useKeyboardShortcuts([
+    {
+      key: 'n',
+      ctrlKey: true,
+      action: () => {
+        const input = document.querySelector('input[placeholder*="Add a new task"]') as HTMLInputElement;
+        if (input) {
+          input.focus();
+          input.scrollIntoView({ behavior: 'smooth' });
+        }
+      },
+      description: 'Focus task input to add new task'
+    },
+    {
+      key: '/',
+      action: () => {
+        const searchInput = document.querySelector('input[placeholder*="Search tasks"]') as HTMLInputElement;
+        if (searchInput) {
+          searchInput.focus();
+          searchInput.scrollIntoView({ behavior: 'smooth' });
+        }
+      },
+      description: 'Focus search input'
+    },
+    {
+      key: 't',
+      ctrlKey: true,
+      action: () => {
+        const templateButton = document.querySelector('button[aria-label="Open templates"]') as HTMLButtonElement;
+        if (templateButton) templateButton.click();
+      },
+      description: 'Open task templates'
+    },
+    {
+      key: 'a',
+      ctrlKey: true,
+      action: () => {
+        if (!isSelectMode) {
+          setIsSelectMode(true);
+          setTimeout(() => handleSelectAll(), 100);
+        } else {
+          handleSelectAll();
+        }
+      },
+      description: 'Select all visible tasks'
+    },
+    {
+      key: 'Escape',
+      action: () => {
+        if (isSelectMode) {
+          setIsSelectMode(false);
+          setSelectedTasks([]);
+        }
+        setActiveCategory(null);
+        setSearchFilters({
+          search: '',
+          priority: undefined,
+          showOverdue: false,
+          showCompleted: true,
+          dueDateFilter: 'all'
+        });
+      },
+      description: 'Clear selection and filters'
+    },
+    {
+      key: '1',
+      altKey: true,
+      action: () => setActiveCategory('personal'),
+      description: 'Filter by Personal category'
+    },
+    {
+      key: '2',
+      altKey: true,
+      action: () => setActiveCategory('work'),
+      description: 'Filter by Work category'
+    },
+    {
+      key: '3',
+      altKey: true,
+      action: () => setActiveCategory('shopping'),
+      description: 'Filter by Shopping category'
+    },
+    {
+      key: '4',
+      altKey: true,
+      action: () => setActiveCategory('health'),
+      description: 'Filter by Health category'
+    },
+    {
+      key: '5',
+      altKey: true,
+      action: () => setActiveCategory('general'),
+      description: 'Filter by General category'
+    }
+  ]);
+
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto max-w-4xl px-4 py-8">
@@ -239,7 +357,11 @@ function App() {
 
         {/* Add Task Form */}
         <div className="mb-6">
-          <AddTaskForm onAddTask={addTask} categories={categories} />
+          <AddTaskForm 
+            onAddTask={addTask} 
+            categories={categories} 
+            templates={templates}
+          />
         </div>
 
         {/* Search and Filters */}
@@ -255,7 +377,7 @@ function App() {
 
         {/* Action Bar */}
         {tasks.length > 0 && (
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center justify-between mb-6 flex-wrap gap-2">
             {/* Bulk Actions */}
             <div className="flex-1">
               <BulkActions
@@ -270,8 +392,19 @@ function App() {
               />
             </div>
             
-            {/* Export */}
-            <div className="ml-4">
+            {/* Management Tools */}
+            <div className="flex items-center gap-2 flex-wrap">
+              <CategoryManager 
+                categories={categories} 
+                onUpdateCategories={setCategories} 
+                tasks={tasks}
+              />
+              <TemplateManager
+                templates={templates}
+                onUpdateTemplates={setTemplates}
+                categories={categories}
+              />
+              <KeyboardShortcutsHelp shortcuts={activeShortcuts} />
               <ExportData tasks={tasks} categories={categories} />
             </div>
           </div>
