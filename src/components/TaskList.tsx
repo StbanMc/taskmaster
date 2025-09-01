@@ -1,7 +1,12 @@
+import { useState } from 'react';
 import { Task, Category, getTaskUrgency } from '@/lib/types';
 import { TaskItem } from './TaskItem';
 import { SortableTaskList } from './SortableTaskList';
 import { Separator } from '@/components/ui/separator';
+import { Button } from '@/components/ui/button';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { ChevronDown, ChevronRight, CheckCircle } from '@phosphor-icons/react';
+import { useI18n } from '@/contexts/I18nContext';
 
 interface TaskListProps {
   tasks: Task[];
@@ -24,6 +29,8 @@ export function TaskList({
   onSelectTask,
   showSelectMode
 }: TaskListProps) {
+  const { t } = useI18n();
+  const [showCompleted, setShowCompleted] = useState(false);
   const pendingTasks = tasks.filter(task => !task.completed);
   const completedTasks = tasks.filter(task => task.completed);
 
@@ -76,26 +83,37 @@ export function TaskList({
         <Separator className="my-6" />
       )}
 
-      {/* Completed Tasks */}
+      {/* Completed Tasks - Collapsible */}
       {completedTasks.length > 0 && (
         <div className="space-y-3">
-          <h2 className="text-lg font-semibold text-muted-foreground">
-            Completed ({completedTasks.length})
-          </h2>
-          <div className="space-y-2">
-            {completedTasks.map((task) => (
-              <TaskItem
-                key={task.id}
-                task={task}
-                category={getCategoryById(task.category)}
-                onToggle={onToggleTask}
-                onDelete={onDeleteTask}
-                isSelected={selectedTasks.includes(task.id)}
-                onSelectToggle={onSelectTask}
-                showSelectMode={showSelectMode}
-              />
-            ))}
-          </div>
+          <Collapsible open={showCompleted} onOpenChange={setShowCompleted}>
+            <CollapsibleTrigger asChild>
+              <Button 
+                variant="ghost" 
+                className="w-full justify-between p-0 h-auto font-semibold text-muted-foreground hover:text-foreground"
+              >
+                <div className="flex items-center gap-2">
+                  <CheckCircle size={20} />
+                  <span>{t('completedTasks')} ({completedTasks.length})</span>
+                </div>
+                {showCompleted ? <ChevronDown size={20} /> : <ChevronRight size={20} />}
+              </Button>
+            </CollapsibleTrigger>
+            <CollapsibleContent className="space-y-2 mt-3">
+              {completedTasks.map((task) => (
+                <TaskItem
+                  key={task.id}
+                  task={task}
+                  category={getCategoryById(task.category)}
+                  onToggle={onToggleTask}
+                  onDelete={onDeleteTask}
+                  isSelected={selectedTasks.includes(task.id)}
+                  onSelectToggle={onSelectTask}
+                  showSelectMode={showSelectMode}
+                />
+              ))}
+            </CollapsibleContent>
+          </Collapsible>
         </div>
       )}
     </div>

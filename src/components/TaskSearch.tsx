@@ -6,6 +6,8 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { useI18n } from '@/contexts/I18nContext';
+import { getPriorityName } from '@/lib/i18n';
 
 export interface SearchFilters {
   search: string;
@@ -22,6 +24,7 @@ interface TaskSearchProps {
 }
 
 export function TaskSearch({ filters, onFiltersChange, hasActiveFilters }: TaskSearchProps) {
+  const { t } = useI18n();
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const handleSearchChange = (search: string) => {
@@ -66,7 +69,7 @@ export function TaskSearch({ filters, onFiltersChange, hasActiveFilters }: TaskS
       <div className="relative">
         <Search size={16} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
         <Input
-          placeholder="Search tasks..."
+          placeholder={t('searchTasks')}
           value={filters.search}
           onChange={(e) => handleSearchChange(e.target.value)}
           className="pl-10 pr-10"

@@ -1,39 +1,31 @@
-// Translation system for TaskFlow app
-export type Language = 'en' | 'es';
-
-export interface Translation {
-  // Common
-  save: string;
-  cancel: string;
-  delete: string;
-  edit: string;
-  add: string;
-  create: string;
-  close: string;
-  search: string;
-  clear: string;
-  loading: string;
-  of: string;
-  
-  // App header
+export interface Translations {
+  // App Header
   appTitle: string;
   appSubtitle: string;
+  
+  // Task Stats
   tasksCompleted: string;
   overdue: string;
   
-  // Task form
-  addNewTask: string;
-  taskTitle: string;
-  taskDescription: string;
-  category: string;
-  priority: string;
-  dueDate: string;
-  addTask: string;
-  
-  // Priorities
+  // Add Task Form
+  addTaskPlaceholder: string;
+  addTaskDescription: string;
+  selectCategory: string;
+  selectPriority: string;
   high: string;
   medium: string;
   low: string;
+  setDueDate: string;
+  addTask: string;
+  useTemplate: string;
+  
+  // Task List
+  markComplete: string;
+  markIncomplete: string;
+  editTask: string;
+  deleteTask: string;
+  selectTask: string;
+  completed: string;
   
   // Categories
   personal: string;
@@ -42,526 +34,301 @@ export interface Translation {
   health: string;
   general: string;
   
-  // Search and filters
+  // Search and Filters
   searchTasks: string;
   filterByPriority: string;
-  filterByDueDate: string;
-  allTasks: string;
+  allPriorities: string;
+  showCompleted: string;
+  showOverdue: string;
+  dueDateFilter: string;
+  allDates: string;
   today: string;
   tomorrow: string;
   thisWeek: string;
-  overdueTasks: string;
   clearFilters: string;
-  filters: string;
   
-  // Bulk actions
-  selectMode: string;
-  selected: string;
+  // Bulk Actions
   selectAll: string;
   deselectAll: string;
-  markCompleted: string;
-  markIncomplete: string;
+  completeSelected: string;
   deleteSelected: string;
-  
-  // Task list
-  noTasks: string;
-  allTasksCompleted: string;
-  greatJobCompleted: string;
-  completedTasks: string;
-  showCompleted: string;
-  hideCompleted: string;
-  
-  // Task actions
-  markComplete: string;
-  markIncomplete: string;
-  editTask: string;
-  deleteTask: string;
-  taskCompleted: string;
-  taskIncomplete: string;
-  taskDeleted: string;
-  taskUpdated: string;
-  tasksReordered: string;
-  
-  // Categories manager
-  manageCategories: string;
-  categoryManager: string;
-  categoryName: string;
-  categoryColor: string;
-  categoryIcon: string;
-  addCategory: string;
-  editCategory: string;
-  deleteCategory: string;
-  categoryAdded: string;
-  categoryUpdated: string;
-  categoryDeleted: string;
-  cannotDeleteCategory: string;
-  
-  // Templates
-  templates: string;
-  templateManager: string;
-  taskTemplates: string;
-  templateName: string;
-  templateDescription: string;
-  addTemplate: string;
-  editTemplate: string;
-  deleteTemplate: string;
-  templateAdded: string;
-  templateUpdated: string;
-  templateDeleted: string;
-  useTemplate: string;
+  selectMode: string;
+  exitSelectMode: string;
+  tasksSelected: string;
   
   // Notifications
+  taskAddedSuccess: string;
+  taskCompletedSuccess: string;
+  taskIncomplete: string;
+  taskDeleted: string;
+  tasksReordered: string;
+  
+  // Management
+  categories: string;
+  templates: string;
   notifications: string;
-  notificationSettings: string;
-  enableNotifications: string;
-  reminderTime: string;
-  minutes: string;
-  hours: string;
-  days: string;
-  notifyOverdue: string;
-  notifyUpcoming: string;
-  dismissNotification: string;
-  clearAllNotifications: string;
-  taskDueSoon: string;
-  taskOverdue: string;
-  
-  // Export
-  exportData: string;
-  exportTasks: string;
-  dataExported: string;
-  
-  // Keyboard shortcuts
   keyboardShortcuts: string;
-  shortcutHelp: string;
-  newTask: string;
-  searchShortcut: string;
-  openTemplates: string;
-  selectAllTasks: string;
-  clearSelection: string;
-  personalCategory: string;
-  workCategory: string;
-  shoppingCategory: string;
-  healthCategory: string;
-  generalCategory: string;
+  exportData: string;
   
-  // Stats
-  totalTasks: string;
-  pendingTasks: string;
-  highPriorityTasks: string;
-  overdueTasksCount: string;
-  completionRate: string;
-  
-  // Time/Date
-  createdAt: string;
-  dueIn: string;
-  minutesAgo: string;
-  hoursAgo: string;
-  daysAgo: string;
-  due: string;
+  // Due dates and urgency
+  dueTomorrow: string;
+  dueToday: string;
+  overdueTask: string;
   noDueDate: string;
   
-  // Messages
-  taskAddedSuccess: string;
-  enterTaskTitle: string;
-  selectCategory: string;
-  confirmDeleteTask: string;
-  confirmDeleteSelected: string;
-  confirmDeleteCategory: string;
-  confirmDeleteTemplate: string;
-  noTasksFound: string;
-  noTasksInCategory: string;
+  // Templates
+  dailyTasks: string;
+  weeklyPlanning: string;
+  projectTasks: string;
+  
+  // Completed tasks section
+  completedTasks: string;
+  showCompletedTasks: string;
+  hideCompletedTasks: string;
+  
+  // Time formats
+  justNow: string;
+  minuteAgo: string;
+  minutesAgo: string;
+  hourAgo: string;
+  hoursAgo: string;
+  dayAgo: string;
+  daysAgo: string;
 }
 
-export const translations: Record<Language, Translation> = {
+export const translations: Record<string, Translations> = {
   en: {
-    // Common
-    save: 'Save',
-    cancel: 'Cancel',
-    delete: 'Delete',
-    edit: 'Edit',
-    add: 'Add',
-    create: 'Create',
-    close: 'Close',
-    search: 'Search',
-    clear: 'Clear',
-    loading: 'Loading...',
-    of: 'of',
+    // App Header
+    appTitle: "TaskFlow",
+    appSubtitle: "Organize your life, one task at a time",
     
-    // App header
-    appTitle: 'TaskFlow',
-    appSubtitle: 'Organize your life, one task at a time',
-    tasksCompleted: 'tasks completed',
-    overdue: 'overdue',
+    // Task Stats
+    tasksCompleted: "of {total} tasks completed",
+    overdue: "overdue",
     
-    // Task form
-    addNewTask: 'Add a new task',
-    taskTitle: 'Task title',
-    taskDescription: 'Task description (optional)',
-    category: 'Category',
-    priority: 'Priority',
-    dueDate: 'Due date',
-    addTask: 'Add Task',
+    // Add Task Form
+    addTaskPlaceholder: "Add a new task...",
+    addTaskDescription: "Description (optional)",
+    selectCategory: "Select category",
+    selectPriority: "Priority",
+    high: "High",
+    medium: "Medium",
+    low: "Low",
+    setDueDate: "Set due date",
+    addTask: "Add Task",
+    useTemplate: "Use Template",
     
-    // Priorities
-    high: 'High',
-    medium: 'Medium',
-    low: 'Low',
+    // Task List
+    markComplete: "Mark as complete",
+    markIncomplete: "Mark as incomplete",
+    editTask: "Edit task",
+    deleteTask: "Delete task",
+    selectTask: "Select task",
+    completed: "Completed",
     
     // Categories
-    personal: 'Personal',
-    work: 'Work',
-    shopping: 'Shopping',
-    health: 'Health',
-    general: 'General',
+    personal: "Personal",
+    work: "Work",
+    shopping: "Shopping",
+    health: "Health",
+    general: "General",
     
-    // Search and filters
-    searchTasks: 'Search tasks...',
-    filterByPriority: 'Filter by priority',
-    filterByDueDate: 'Filter by due date',
-    allTasks: 'All tasks',
-    today: 'Today',
-    tomorrow: 'Tomorrow',
-    thisWeek: 'This week',
-    overdueTasks: 'Overdue',
-    clearFilters: 'Clear filters',
-    filters: 'Filters',
+    // Search and Filters
+    searchTasks: "Search tasks...",
+    filterByPriority: "Filter by priority",
+    allPriorities: "All priorities",
+    showCompleted: "Show completed",
+    showOverdue: "Show overdue",
+    dueDateFilter: "Due date filter",
+    allDates: "All dates",
+    today: "Today",
+    tomorrow: "Tomorrow",
+    thisWeek: "This week",
+    clearFilters: "Clear all filters",
     
-    // Bulk actions
-    selectMode: 'Select Mode',
-    selected: 'selected',
-    selectAll: 'Select All',
-    deselectAll: 'Deselect All',
-    markCompleted: 'Mark Completed',
-    markIncomplete: 'Mark Incomplete',
-    deleteSelected: 'Delete Selected',
-    
-    // Task list
-    noTasks: 'No tasks yet. Create your first task above!',
-    allTasksCompleted: 'All tasks completed! 🎉',
-    greatJobCompleted: 'Great job! Completed tasks are shown at the bottom.',
-    completedTasks: 'Completed Tasks',
-    showCompleted: 'Show completed tasks',
-    hideCompleted: 'Hide completed tasks',
-    
-    // Task actions
-    markComplete: 'Mark as complete',
-    markIncomplete: 'Mark as incomplete',
-    editTask: 'Edit task',
-    deleteTask: 'Delete task',
-    taskCompleted: 'Task completed! 🎉',
-    taskIncomplete: 'Task marked as incomplete',
-    taskDeleted: 'Task deleted',
-    taskUpdated: 'Task updated',
-    tasksReordered: 'Tasks reordered',
-    
-    // Categories manager
-    manageCategories: 'Manage Categories',
-    categoryManager: 'Category Manager',
-    categoryName: 'Category name',
-    categoryColor: 'Category color',
-    categoryIcon: 'Category icon',
-    addCategory: 'Add Category',
-    editCategory: 'Edit Category',
-    deleteCategory: 'Delete Category',
-    categoryAdded: 'Category added',
-    categoryUpdated: 'Category updated',
-    categoryDeleted: 'Category deleted',
-    cannotDeleteCategory: 'Cannot delete category with existing tasks',
-    
-    // Templates
-    templates: 'Templates',
-    templateManager: 'Template Manager',
-    taskTemplates: 'Task Templates',
-    templateName: 'Template name',
-    templateDescription: 'Template description',
-    addTemplate: 'Add Template',
-    editTemplate: 'Edit Template',
-    deleteTemplate: 'Delete Template',
-    templateAdded: 'Template added',
-    templateUpdated: 'Template updated',
-    templateDeleted: 'Template deleted',
-    useTemplate: 'Use Template',
+    // Bulk Actions
+    selectAll: "Select all",
+    deselectAll: "Deselect all",
+    completeSelected: "Complete selected",
+    deleteSelected: "Delete selected",
+    selectMode: "Select mode",
+    exitSelectMode: "Exit select mode",
+    tasksSelected: "tasks selected",
     
     // Notifications
-    notifications: 'Notifications',
-    notificationSettings: 'Notification Settings',
-    enableNotifications: 'Enable Notifications',
-    reminderTime: 'Reminder Time',
-    minutes: 'minutes',
-    hours: 'hours',
-    days: 'days',
-    notifyOverdue: 'Notify when overdue',
-    notifyUpcoming: 'Notify upcoming tasks',
-    dismissNotification: 'Dismiss notification',
-    clearAllNotifications: 'Clear all notifications',
-    taskDueSoon: 'Task due soon',
-    taskOverdue: 'Task is overdue',
+    taskAddedSuccess: "Task added successfully!",
+    taskCompletedSuccess: "Task completed! 🎉",
+    taskIncomplete: "Task marked as incomplete",
+    taskDeleted: "Task deleted",
+    tasksReordered: "Tasks reordered",
     
-    // Export
-    exportData: 'Export Data',
-    exportTasks: 'Export Tasks',
-    dataExported: 'Data exported successfully',
+    // Management
+    categories: "Categories",
+    templates: "Templates",
+    notifications: "Notifications",
+    keyboardShortcuts: "Keyboard Shortcuts",
+    exportData: "Export Data",
     
-    // Keyboard shortcuts
-    keyboardShortcuts: 'Keyboard Shortcuts',
-    shortcutHelp: 'Keyboard Shortcuts Help',
-    newTask: 'Focus task input to add new task',
-    searchShortcut: 'Focus search input',
-    openTemplates: 'Open task templates',
-    selectAllTasks: 'Select all visible tasks',
-    clearSelection: 'Clear selection and filters',
-    personalCategory: 'Filter by Personal category',
-    workCategory: 'Filter by Work category',
-    shoppingCategory: 'Filter by Shopping category',
-    healthCategory: 'Filter by Health category',
-    generalCategory: 'Filter by General category',
+    // Due dates and urgency
+    dueTomorrow: "Due tomorrow",
+    dueToday: "Due today",
+    overdueTask: "Overdue",
+    noDueDate: "No due date",
     
-    // Stats
-    totalTasks: 'Total Tasks',
-    pendingTasks: 'Pending Tasks',
-    highPriorityTasks: 'High Priority',
-    overdueTasksCount: 'Overdue Tasks',
-    completionRate: 'Completion Rate',
+    // Templates
+    dailyTasks: "Daily Tasks",
+    weeklyPlanning: "Weekly Planning",
+    projectTasks: "Project Tasks",
     
-    // Time/Date
-    createdAt: 'Created at',
-    dueIn: 'Due in',
-    minutesAgo: 'minutes ago',
-    hoursAgo: 'hours ago',
-    daysAgo: 'days ago',
-    due: 'Due',
-    noDueDate: 'No due date',
+    // Completed tasks section
+    completedTasks: "Completed Tasks",
+    showCompletedTasks: "Show completed tasks",
+    hideCompletedTasks: "Hide completed tasks",
     
-    // Messages
-    taskAddedSuccess: 'Task added successfully!',
-    enterTaskTitle: 'Please enter a task title',
-    selectCategory: 'Please select a category',
-    confirmDeleteTask: 'Are you sure you want to delete this task?',
-    confirmDeleteSelected: 'Are you sure you want to delete the selected tasks?',
-    confirmDeleteCategory: 'Are you sure you want to delete this category?',
-    confirmDeleteTemplate: 'Are you sure you want to delete this template?',
-    noTasksFound: 'No tasks found matching your search',
-    noTasksInCategory: 'No tasks in this category'
+    // Time formats
+    justNow: "just now",
+    minuteAgo: "1 minute ago",
+    minutesAgo: "{minutes} minutes ago",
+    hourAgo: "1 hour ago",
+    hoursAgo: "{hours} hours ago",
+    dayAgo: "1 day ago",
+    daysAgo: "{days} days ago"
   },
+  
   es: {
-    // Common
-    save: 'Guardar',
-    cancel: 'Cancelar',
-    delete: 'Eliminar',
-    edit: 'Editar',
-    add: 'Agregar',
-    create: 'Crear',
-    close: 'Cerrar',
-    search: 'Buscar',
-    clear: 'Limpiar',
-    loading: 'Cargando...',
-    of: 'de',
+    // App Header
+    appTitle: "TaskFlow",
+    appSubtitle: "Organiza tu vida, una tarea a la vez",
     
-    // App header
-    appTitle: 'TaskFlow',
-    appSubtitle: 'Organiza tu vida, una tarea a la vez',
-    tasksCompleted: 'tareas completadas',
-    overdue: 'vencidas',
+    // Task Stats
+    tasksCompleted: "de {total} tareas completadas",
+    overdue: "vencidas",
     
-    // Task form
-    addNewTask: 'Agregar una nueva tarea',
-    taskTitle: 'Título de la tarea',
-    taskDescription: 'Descripción de la tarea (opcional)',
-    category: 'Categoría',
-    priority: 'Prioridad',
-    dueDate: 'Fecha límite',
-    addTask: 'Agregar Tarea',
+    // Add Task Form
+    addTaskPlaceholder: "Agregar nueva tarea...",
+    addTaskDescription: "Descripción (opcional)",
+    selectCategory: "Seleccionar categoría",
+    selectPriority: "Prioridad",
+    high: "Alta",
+    medium: "Media",
+    low: "Baja",
+    setDueDate: "Establecer fecha límite",
+    addTask: "Agregar Tarea",
+    useTemplate: "Usar Plantilla",
     
-    // Priorities
-    high: 'Alta',
-    medium: 'Media',
-    low: 'Baja',
+    // Task List
+    markComplete: "Marcar como completada",
+    markIncomplete: "Marcar como incompleta",
+    editTask: "Editar tarea",
+    deleteTask: "Eliminar tarea",
+    selectTask: "Seleccionar tarea",
+    completed: "Completada",
     
     // Categories
-    personal: 'Personal',
-    work: 'Trabajo',
-    shopping: 'Compras',
-    health: 'Salud',
-    general: 'General',
+    personal: "Personal",
+    work: "Trabajo",
+    shopping: "Compras",
+    health: "Salud",
+    general: "General",
     
-    // Search and filters
-    searchTasks: 'Buscar tareas...',
-    filterByPriority: 'Filtrar por prioridad',
-    filterByDueDate: 'Filtrar por fecha límite',
-    allTasks: 'Todas las tareas',
-    today: 'Hoy',
-    tomorrow: 'Mañana',
-    thisWeek: 'Esta semana',
-    overdueTasks: 'Vencidas',
-    clearFilters: 'Limpiar filtros',
-    filters: 'Filtros',
+    // Search and Filters
+    searchTasks: "Buscar tareas...",
+    filterByPriority: "Filtrar por prioridad",
+    allPriorities: "Todas las prioridades",
+    showCompleted: "Mostrar completadas",
+    showOverdue: "Mostrar vencidas",
+    dueDateFilter: "Filtro de fecha límite",
+    allDates: "Todas las fechas",
+    today: "Hoy",
+    tomorrow: "Mañana",
+    thisWeek: "Esta semana",
+    clearFilters: "Limpiar todos los filtros",
     
-    // Bulk actions
-    selectMode: 'Modo Selección',
-    selected: 'seleccionadas',
-    selectAll: 'Seleccionar Todo',
-    deselectAll: 'Deseleccionar Todo',
-    markCompleted: 'Marcar Completadas',
-    markIncomplete: 'Marcar Incompletas',
-    deleteSelected: 'Eliminar Seleccionadas',
-    
-    // Task list
-    noTasks: '¡Aún no hay tareas. Crea tu primera tarea arriba!',
-    allTasksCompleted: '¡Todas las tareas completadas! 🎉',
-    greatJobCompleted: '¡Buen trabajo! Las tareas completadas se muestran abajo.',
-    completedTasks: 'Tareas Completadas',
-    showCompleted: 'Mostrar tareas completadas',
-    hideCompleted: 'Ocultar tareas completadas',
-    
-    // Task actions
-    markComplete: 'Marcar como completada',
-    markIncomplete: 'Marcar como incompleta',
-    editTask: 'Editar tarea',
-    deleteTask: 'Eliminar tarea',
-    taskCompleted: '¡Tarea completada! 🎉',
-    taskIncomplete: 'Tarea marcada como incompleta',
-    taskDeleted: 'Tarea eliminada',
-    taskUpdated: 'Tarea actualizada',
-    tasksReordered: 'Tareas reordenadas',
-    
-    // Categories manager
-    manageCategories: 'Gestionar Categorías',
-    categoryManager: 'Gestor de Categorías',
-    categoryName: 'Nombre de la categoría',
-    categoryColor: 'Color de la categoría',
-    categoryIcon: 'Ícono de la categoría',
-    addCategory: 'Agregar Categoría',
-    editCategory: 'Editar Categoría',
-    deleteCategory: 'Eliminar Categoría',
-    categoryAdded: 'Categoría agregada',
-    categoryUpdated: 'Categoría actualizada',
-    categoryDeleted: 'Categoría eliminada',
-    cannotDeleteCategory: 'No se puede eliminar la categoría con tareas existentes',
-    
-    // Templates
-    templates: 'Plantillas',
-    templateManager: 'Gestor de Plantillas',
-    taskTemplates: 'Plantillas de Tareas',
-    templateName: 'Nombre de la plantilla',
-    templateDescription: 'Descripción de la plantilla',
-    addTemplate: 'Agregar Plantilla',
-    editTemplate: 'Editar Plantilla',
-    deleteTemplate: 'Eliminar Plantilla',
-    templateAdded: 'Plantilla agregada',
-    templateUpdated: 'Plantilla actualizada',
-    templateDeleted: 'Plantilla eliminada',
-    useTemplate: 'Usar Plantilla',
+    // Bulk Actions
+    selectAll: "Seleccionar todo",
+    deselectAll: "Deseleccionar todo",
+    completeSelected: "Completar seleccionadas",
+    deleteSelected: "Eliminar seleccionadas",
+    selectMode: "Modo selección",
+    exitSelectMode: "Salir del modo selección",
+    tasksSelected: "tareas seleccionadas",
     
     // Notifications
-    notifications: 'Notificaciones',
-    notificationSettings: 'Configuración de Notificaciones',
-    enableNotifications: 'Habilitar Notificaciones',
-    reminderTime: 'Tiempo de Recordatorio',
-    minutes: 'minutos',
-    hours: 'horas',
-    days: 'días',
-    notifyOverdue: 'Notificar cuando esté vencida',
-    notifyUpcoming: 'Notificar tareas próximas',
-    dismissNotification: 'Descartar notificación',
-    clearAllNotifications: 'Limpiar todas las notificaciones',
-    taskDueSoon: 'Tarea vence pronto',
-    taskOverdue: 'Tarea está vencida',
+    taskAddedSuccess: "¡Tarea agregada exitosamente!",
+    taskCompletedSuccess: "¡Tarea completada! 🎉",
+    taskIncomplete: "Tarea marcada como incompleta",
+    taskDeleted: "Tarea eliminada",
+    tasksReordered: "Tareas reordenadas",
     
-    // Export
-    exportData: 'Exportar Datos',
-    exportTasks: 'Exportar Tareas',
-    dataExported: 'Datos exportados exitosamente',
+    // Management
+    categories: "Categorías",
+    templates: "Plantillas",
+    notifications: "Notificaciones",
+    keyboardShortcuts: "Atajos de Teclado",
+    exportData: "Exportar Datos",
     
-    // Keyboard shortcuts
-    keyboardShortcuts: 'Atajos de Teclado',
-    shortcutHelp: 'Ayuda de Atajos de Teclado',
-    newTask: 'Enfocar entrada de tarea para agregar nueva tarea',
-    searchShortcut: 'Enfocar entrada de búsqueda',
-    openTemplates: 'Abrir plantillas de tareas',
-    selectAllTasks: 'Seleccionar todas las tareas visibles',
-    clearSelection: 'Limpiar selección y filtros',
-    personalCategory: 'Filtrar por categoría Personal',
-    workCategory: 'Filtrar por categoría Trabajo',
-    shoppingCategory: 'Filtrar por categoría Compras',
-    healthCategory: 'Filtrar por categoría Salud',
-    generalCategory: 'Filtrar por categoría General',
+    // Due dates and urgency
+    dueTomorrow: "Vence mañana",
+    dueToday: "Vence hoy",
+    overdueTask: "Vencida",
+    noDueDate: "Sin fecha límite",
     
-    // Stats
-    totalTasks: 'Total de Tareas',
-    pendingTasks: 'Tareas Pendientes',
-    highPriorityTasks: 'Prioridad Alta',
-    overdueTasksCount: 'Tareas Vencidas',
-    completionRate: 'Tasa de Finalización',
+    // Templates
+    dailyTasks: "Tareas Diarias",
+    weeklyPlanning: "Planificación Semanal",
+    projectTasks: "Tareas de Proyecto",
     
-    // Time/Date
-    createdAt: 'Creada el',
-    dueIn: 'Vence en',
-    minutesAgo: 'minutos atrás',
-    hoursAgo: 'horas atrás',
-    daysAgo: 'días atrás',
-    due: 'Vence',
-    noDueDate: 'Sin fecha límite',
+    // Completed tasks section
+    completedTasks: "Tareas Completadas",
+    showCompletedTasks: "Mostrar tareas completadas",
+    hideCompletedTasks: "Ocultar tareas completadas",
     
-    // Messages
-    taskAddedSuccess: '¡Tarea agregada exitosamente!',
-    enterTaskTitle: 'Por favor ingresa un título para la tarea',
-    selectCategory: 'Por favor selecciona una categoría',
-    confirmDeleteTask: '¿Estás seguro de que quieres eliminar esta tarea?',
-    confirmDeleteSelected: '¿Estás seguro de que quieres eliminar las tareas seleccionadas?',
-    confirmDeleteCategory: '¿Estás seguro de que quieres eliminar esta categoría?',
-    confirmDeleteTemplate: '¿Estás seguro de que quieres eliminar esta plantilla?',
-    noTasksFound: 'No se encontraron tareas que coincidan con tu búsqueda',
-    noTasksInCategory: 'No hay tareas en esta categoría'
+    // Time formats
+    justNow: "ahora mismo",
+    minuteAgo: "hace 1 minuto",
+    minutesAgo: "hace {minutes} minutos",
+    hourAgo: "hace 1 hora",
+    hoursAgo: "hace {hours} horas",
+    dayAgo: "hace 1 día",
+    daysAgo: "hace {days} días"
   }
 };
 
-// Translation hook
-export function useTranslation(language: Language) {
-  return {
-    t: translations[language],
-    language
-  };
-}
+export const detectBrowserLanguage = (): string => {
+  // Get browser language preference
+  const browserLang = navigator.language || navigator.languages?.[0] || 'en';
+  
+  // Extract language code (e.g., 'es-ES' -> 'es')
+  const langCode = browserLang.split('-')[0].toLowerCase();
+  
+  // Return supported language or fallback to English
+  return translations[langCode] ? langCode : 'en';
+};
 
-// Helper function to get translation
-export function getTranslation(language: Language, key: keyof Translation): string {
-  return translations[language][key];
-}
+export const formatString = (template: string, params: Record<string, string | number>): string => {
+  return template.replace(/\{(\w+)\}/g, (match, key) => {
+    return params[key]?.toString() || match;
+  });
+};
 
-// Helper function to get priority config with translation
-export function getPriorityConfigWithTranslation(priority: Priority, language: Language) {
-  const baseConfig = {
-    high: { color: 'bg-red-500', textColor: 'text-red-600' },
-    medium: { color: 'bg-yellow-500', textColor: 'text-yellow-600' },
-    low: { color: 'bg-green-500', textColor: 'text-green-600' }
-  } as const;
-  
-  const labels = {
-    high: getTranslation(language, 'high'),
-    medium: getTranslation(language, 'medium'),
-    low: getTranslation(language, 'low')
+export const getCategoryName = (categoryId: string, t: (key: keyof Translations) => string): string => {
+  const categoryMap: Record<string, keyof Translations> = {
+    'personal': 'personal',
+    'work': 'work',
+    'shopping': 'shopping',
+    'health': 'health',
+    'general': 'general'
   };
   
-  return {
-    ...baseConfig[priority],
-    label: labels[priority]
-  };
-}
+  return categoryMap[categoryId] ? t(categoryMap[categoryId]) : categoryId;
+};
 
-// Helper function to get category name with translation
-export function getCategoryNameWithTranslation(categoryId: string, language: Language) {
-  const categoryTranslations: Record<string, keyof Translation> = {
-    personal: 'personal',
-    work: 'work',
-    shopping: 'shopping',
-    health: 'health',
-    general: 'general'
+export const getPriorityName = (priority: string, t: (key: keyof Translations) => string): string => {
+  const priorityMap: Record<string, keyof Translations> = {
+    'high': 'high',
+    'medium': 'medium',
+    'low': 'low'
   };
   
-  if (categoryId in categoryTranslations) {
-    return getTranslation(language, categoryTranslations[categoryId]);
-  }
-  
-  // Return the original category name for custom categories
-  return categoryId;
-}
+  return priorityMap[priority] ? t(priorityMap[priority]) : priority;
+};

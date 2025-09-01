@@ -9,6 +9,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { TaskTemplatePicker } from '@/components/TaskTemplatePicker';
+import { useI18n } from '@/contexts/I18nContext';
+import { getCategoryName, getPriorityName } from '@/lib/i18n';
 
 interface AddTaskFormProps {
   onAddTask: (task: Omit<Task, 'id' | 'createdAt'>) => void;
@@ -18,6 +20,7 @@ interface AddTaskFormProps {
 }
 
 export function AddTaskForm({ onAddTask, categories, templates, onQuickAdd }: AddTaskFormProps) {
+  const { t } = useI18n();
   const [title, setTitle] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('general');
   const [selectedPriority, setSelectedPriority] = useState<Priority>('medium');
@@ -89,7 +92,7 @@ export function AddTaskForm({ onAddTask, categories, templates, onQuickAdd }: Ad
           <div className="flex gap-3">
             <div className="flex-1">
               <Input
-                placeholder="Add a new task..."
+                placeholder={t('addTaskPlaceholder')}
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 className="border-0 shadow-none focus-visible:ring-0 text-base"
@@ -105,7 +108,7 @@ export function AddTaskForm({ onAddTask, categories, templates, onQuickAdd }: Ad
                   <SelectItem key={category.id} value={category.id}>
                     <div className="flex items-center gap-2">
                       <div className={`w-2 h-2 rounded-full ${category.color}`} />
-                      {category.name}
+                      {getCategoryName(category.id, t)}
                     </div>
                   </SelectItem>
                 ))}
@@ -121,7 +124,7 @@ export function AddTaskForm({ onAddTask, categories, templates, onQuickAdd }: Ad
                   <SelectItem key={priority} value={priority}>
                     <div className="flex items-center gap-2">
                       <div className={`w-2 h-2 rounded-full ${config.color}`} />
-                      {config.label}
+                      {getPriorityName(priority, t)}
                     </div>
                   </SelectItem>
                 ))}
@@ -140,7 +143,7 @@ export function AddTaskForm({ onAddTask, categories, templates, onQuickAdd }: Ad
             
             <Button type="submit" disabled={!title.trim()}>
               <Plus size={16} />
-              Add
+              {t('addTask')}
             </Button>
           </div>
 
@@ -162,7 +165,7 @@ export function AddTaskForm({ onAddTask, categories, templates, onQuickAdd }: Ad
                 <div className="space-y-2">
                   <label className="text-sm font-medium flex items-center gap-2">
                     <Calendar size={14} />
-                    Due Date
+                    {t('setDueDate')}
                   </label>
                   <Input
                     type="date"
@@ -176,7 +179,7 @@ export function AddTaskForm({ onAddTask, categories, templates, onQuickAdd }: Ad
               <div className="space-y-2">
                 <label className="text-sm font-medium">Description</label>
                 <Textarea
-                  placeholder="Add task details or notes..."
+                  placeholder={t('addTaskDescription')}
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   className="text-sm min-h-[60px] resize-none"

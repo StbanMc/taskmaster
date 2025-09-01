@@ -13,6 +13,7 @@ import { TemplateManager } from '@/components/TemplateManager';
 import { KeyboardShortcutsHelp } from '@/components/KeyboardShortcutsHelp';
 import { NotificationSettingsDialog } from '@/components/NotificationSettingsDialog';
 import { NotificationButton } from '@/components/NotificationButton';
+import { LanguageSelector } from '@/components/LanguageSelector';
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
 import { CheckCircle, MagnifyingGlass } from '@phosphor-icons/react';
@@ -20,8 +21,10 @@ import { Toaster, toast } from 'sonner';
 import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
 import { useNotifications } from '@/hooks/useNotifications';
 import { NotificationSettings, TaskNotification, DEFAULT_NOTIFICATION_SETTINGS } from '@/lib/notifications';
+import { I18nProvider, useI18n } from '@/contexts/I18nContext';
 
-function App() {
+function TaskFlowApp() {
+  const { t } = useI18n();
   const [tasks, setTasks] = useKV<Task[]>('taskflow-tasks', []);
   const [categories, setCategories] = useKV<Category[]>('taskflow-categories', DEFAULT_CATEGORIES);
   const [templates, setTemplates] = useKV<TaskTemplate[]>('taskflow-templates', DEFAULT_TEMPLATES);
@@ -91,7 +94,7 @@ function App() {
       createdAt: Date.now()
     };
     setTasks(currentTasks => [...currentTasks, newTask]);
-    toast.success('Task added successfully!');
+    toast.success(t('taskAddedSuccess'));
   };
 
   const toggleTask = (taskId: string) => {
@@ -104,9 +107,9 @@ function App() {
             completedAt: !task.completed ? Date.now() : undefined
           };
           if (updated.completed) {
-            toast.success('Task completed! 🎉');
+            toast.success(t('taskCompletedSuccess'));
           } else {
-            toast.info('Task marked as incomplete');
+            toast.info(t('taskIncomplete'));
           }
           return updated;
         }
@@ -118,12 +121,12 @@ function App() {
   const deleteTask = (taskId: string) => {
     setTasks(currentTasks => currentTasks.filter(task => task.id !== taskId));
     setSelectedTasks(current => current.filter(id => id !== taskId));
-    toast.error('Task deleted');
+    toast.error(t('taskDeleted'));
   };
 
   const reorderTasks = (reorderedTasks: Task[]) => {
     setTasks(reorderedTasks);
-    toast.success('Tasks reordered');
+    toast.success(t('tasksReordered'));
   };
 
   // Selection handlers
@@ -351,15 +354,16 @@ function App() {
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-3 mb-2">
             <CheckCircle size={32} className="text-primary" />
-            <h1 className="text-3xl font-bold text-foreground">TaskFlow</h1>
+            <h1 className="text-3xl font-bold text-foreground">{t('appTitle')}</h1>
+            <LanguageSelector />
           </div>
-          <p className="text-muted-foreground">Organize your life, one task at a time</p>
+          <p className="text-muted-foreground">{t('appSubtitle')}</p>
           {totalCount > 0 && (
             <div className="flex items-center justify-center gap-4 mt-2 text-sm text-muted-foreground">
-              <span>{completedCount} of {totalCount} tasks completed</span>
+              <span>{completedCount} {t('tasksCompleted', { total: totalCount.toString() })}</span>
               {overdueCount > 0 && (
                 <span className="text-red-600 font-medium">
-                  {overdueCount} overdue
+                  {overdueCount} {t('overdue')}
                 </span>
               )}
             </div>
@@ -463,6 +467,14 @@ function App() {
       </div>
       <Toaster position="bottom-center" />
     </div>
+  );
+}
+
+function App() {
+  return (
+    <I18nProvider>
+      <TaskFlowApp />
+    </I18nProvider>
   );
 }
 
