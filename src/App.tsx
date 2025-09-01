@@ -26,6 +26,7 @@ import { useNotifications } from '@/hooks/useNotifications';
 import { NotificationSettings, TaskNotification, DEFAULT_NOTIFICATION_SETTINGS } from '@/lib/notifications';
 import { I18nProvider, useI18n } from '@/contexts/I18nContext';
 import { ThemeProvider, useTheme } from '@/contexts/ThemeContext';
+import ErrorBoundary from '@/components/ErrorBoundary';
 
 function TaskFlowApp() {
   const { t } = useI18n();
@@ -509,11 +510,13 @@ function TaskFlowApp() {
 
 function App() {
   return (
-    <ThemeProvider>
-      <I18nProvider>
-        <TaskFlowApp />
-      </I18nProvider>
-    </ThemeProvider>
+    <ErrorBoundary>
+      <ThemeProvider>
+        <I18nProvider>
+          <TaskFlowApp />
+        </I18nProvider>
+      </ThemeProvider>
+    </ErrorBoundary>
   );
 }
 

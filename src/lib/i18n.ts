@@ -430,20 +430,31 @@ export const translations: Record<string, Translations> = {
 };
 
 export const detectBrowserLanguage = (): string => {
-  // Get browser language preference
-  const browserLang = navigator.language || navigator.languages?.[0] || 'en';
-  
-  // Extract language code (e.g., 'es-ES' -> 'es')
-  const langCode = browserLang.split('-')[0].toLowerCase();
-  
-  // Return supported language or fallback to English
-  return translations[langCode] ? langCode : 'en';
+  try {
+    // Get browser language preference
+    const browserLang = navigator?.language || navigator?.languages?.[0] || 'en';
+    
+    // Extract language code (e.g., 'es-ES' -> 'es')
+    const langCode = browserLang.split('-')[0].toLowerCase();
+    
+    // Return supported language or fallback to English
+    return translations[langCode] ? langCode : 'en';
+  } catch (error) {
+    console.warn('Failed to detect browser language:', error);
+    return 'en';
+  }
 };
 
 export const formatString = (template: string, params: Record<string, string | number>): string => {
-  return template.replace(/\{(\w+)\}/g, (match, key) => {
-    return params[key]?.toString() || match;
-  });
+  try {
+    if (!template || typeof template !== 'string') return '';
+    return template.replace(/\{(\w+)\}/g, (match, key) => {
+      return params[key]?.toString() || match;
+    });
+  } catch (error) {
+    console.warn('String formatting error:', error);
+    return template || '';
+  }
 };
 
 export const getCategoryName = (categoryId: string, t: (key: keyof Translations) => string): string => {
