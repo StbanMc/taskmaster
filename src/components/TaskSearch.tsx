@@ -78,10 +78,10 @@ export function TaskSearch({ filters, onFiltersChange, hasActiveFilters }: TaskS
           <Button
             variant="ghost"
             size="sm"
-            className="absolute right-1 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0"
+            className="absolute right-1 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0 text-muted-foreground hover:text-foreground"
             onClick={() => handleSearchChange('')}
           >
-            <X size={14} />
+            <X size={14} className="text-current" />
           </Button>
         )}
       </div>
@@ -90,8 +90,8 @@ export function TaskSearch({ filters, onFiltersChange, hasActiveFilters }: TaskS
       <div className="flex flex-wrap items-center gap-2">
         <Popover open={isFilterOpen} onOpenChange={setIsFilterOpen}>
           <PopoverTrigger asChild>
-            <Button variant="outline" size="sm" className="gap-2">
-              <Funnel size={14} className="shrink-0" />
+            <Button variant="outline" size="sm" className="gap-2 text-foreground">
+              <Funnel size={14} className="shrink-0 text-current" />
               {t('filters')}
               {hasActiveFilters && (
                 <Badge variant="secondary" className="ml-1 px-1.5 py-0.5 text-xs">

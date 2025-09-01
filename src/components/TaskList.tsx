@@ -91,14 +91,17 @@ export function TaskList({
             <CollapsibleTrigger asChild>
               <Button 
                 variant="ghost" 
-                className="w-full justify-between p-0 h-auto font-semibold text-muted-foreground hover:text-foreground"
+                className="w-full justify-between p-0 h-auto font-semibold text-muted-foreground hover:text-foreground transition-colors"
                 title={showCompleted ? t('hideCompletedTasks') : t('showCompletedTasks')}
               >
                 <div className="flex items-center gap-2">
-                  <CheckCircle size={20} />
+                  <CheckCircle size={20} className="text-current" />
                   <span>{t('completedTasks')} ({completedTasks.length})</span>
                 </div>
-                {showCompleted ? <CaretDown size={20} /> : <CaretRight size={20} />}
+                {showCompleted ? 
+                  <CaretDown size={20} className="text-current transition-transform" /> : 
+                  <CaretRight size={20} className="text-current transition-transform" />
+                }
               </Button>
             </CollapsibleTrigger>
             <CollapsibleContent className="space-y-2 mt-3">

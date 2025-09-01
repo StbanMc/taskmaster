@@ -122,7 +122,7 @@ export function TaskItem({
                       "flex items-center gap-1 text-[10px] md:text-xs",
                       overdue && !task.completed ? "text-red-600" : "text-muted-foreground"
                     )}>
-                      <Calendar size={10} className="md:w-3 md:h-3" />
+                      <Calendar size={10} className="md:w-3 md:h-3 text-current" />
                       {formatDate(task.dueDate)}
                     </div>
                   </>
@@ -133,10 +133,10 @@ export function TaskItem({
                 variant="ghost"
                 size="sm"
                 onClick={() => onDelete(task.id)}
-                className="h-6 w-6 md:h-8 md:w-8 p-0 text-muted-foreground hover:text-destructive flex-shrink-0"
+                className="h-6 w-6 md:h-8 md:w-8 p-0 text-muted-foreground hover:text-destructive hover:bg-destructive/10 flex-shrink-0 transition-colors"
                 aria-label={t('deleteTask')}
               >
-                <Trash size={12} className="shrink-0 md:w-4 md:h-4" />
+                <Trash size={12} className="shrink-0 md:w-4 md:h-4 text-current" />
               </Button>
             </div>
           </div>
