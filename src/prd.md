@@ -1,9 +1,9 @@
 # TaskFlow - Task Management Application PRD
 
 ## Core Purpose & Success
-- **Mission Statement**: TaskFlow provides comprehensive task management with templates, keyboard shortcuts, custom categories, analytics, and data export, creating a professional-grade productivity solution that accelerates task creation and organization.
-- **Success Indicators**: Users can quickly create tasks from templates, navigate efficiently with keyboard shortcuts, organize tasks in personalized categories with custom colors and icons, and maintain high productivity through streamlined workflows.
-- **Experience Qualities**: Efficient, Customizable, Professional
+- **Mission Statement**: TaskFlow provides comprehensive task management with proactive notifications, templates, keyboard shortcuts, custom categories, and analytics, creating a professional-grade productivity solution that keeps users on track and accelerates task organization.
+- **Success Indicators**: Users receive timely reminders for due tasks, can quickly create tasks from templates, navigate efficiently with keyboard shortcuts, organize tasks in personalized categories, and maintain high productivity through streamlined workflows and proactive alerting.
+- **Experience Qualities**: Efficient, Proactive, Customizable, Professional
 
 ## Project Classification & Approach
 - **Complexity Level**: Complex Application (advanced functionality with power-user features)
@@ -48,6 +48,17 @@
 - **Category Quick Access**: Alt+1-5 to filter by default categories (Personal, Work, Shopping, Health, General)
 - **Keyboard Help**: Dedicated shortcuts help dialog showing all available shortcuts
 - **Context Awareness**: Shortcuts disabled when typing in input fields
+
+### 🔔 Notifications & Reminders (New)
+- **Due Date Notifications**: Automated reminders for tasks approaching their due dates
+- **Overdue Alerts**: Immediate notifications when tasks become overdue
+- **Browser Notifications**: System-level notifications that work even when app is closed
+- **Sound Alerts**: Optional audio notifications with adjustable volume
+- **Customizable Reminder Times**: User-configurable reminder intervals (default: 1 hour, 15 minutes, at due time)
+- **Notification Center**: Centralized view of all active and pending notifications
+- **Smart Scheduling**: Automatic notification scheduling when tasks are created or modified
+- **Permission Management**: Graceful handling of browser notification permissions
+- **Notification Persistence**: Notifications saved across browser sessions
 
 ### Advanced Organization & Search
 - **Enhanced Category System**: Default + custom categories with icons and colors

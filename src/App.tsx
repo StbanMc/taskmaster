@@ -11,16 +11,22 @@ import { ExportData } from '@/components/ExportData';
 import { CategoryManager } from '@/components/CategoryManager';
 import { TemplateManager } from '@/components/TemplateManager';
 import { KeyboardShortcutsHelp } from '@/components/KeyboardShortcutsHelp';
+import { NotificationSettingsDialog } from '@/components/NotificationSettingsDialog';
+import { NotificationButton } from '@/components/NotificationButton';
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
 import { CheckCircle, MagnifyingGlass } from '@phosphor-icons/react';
 import { Toaster, toast } from 'sonner';
 import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
+import { useNotifications } from '@/hooks/useNotifications';
+import { NotificationSettings, TaskNotification, DEFAULT_NOTIFICATION_SETTINGS } from '@/lib/notifications';
 
 function App() {
   const [tasks, setTasks] = useKV<Task[]>('taskflow-tasks', []);
   const [categories, setCategories] = useKV<Category[]>('taskflow-categories', DEFAULT_CATEGORIES);
   const [templates, setTemplates] = useKV<TaskTemplate[]>('taskflow-templates', DEFAULT_TEMPLATES);
+  const [notificationSettings, setNotificationSettings] = useKV<NotificationSettings>('taskflow-notifications', DEFAULT_NOTIFICATION_SETTINGS);
+  const [notifications, setNotifications] = useKV<TaskNotification[]>('taskflow-active-notifications', []);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [selectedTasks, setSelectedTasks] = useState<string[]>([]);
   const [isSelectMode, setIsSelectMode] = useState(false);
@@ -33,6 +39,14 @@ function App() {
   });
 
   const searchInputRef = useRef<HTMLInputElement>(null);
+
+  // Initialize notifications system
+  const notificationManager = useNotifications({
+    tasks,
+    settings: notificationSettings,
+    onNotificationUpdate: setNotifications,
+    onSettingsUpdate: setNotificationSettings
+  });
 
   // Migrate existing tasks and categories to include new fields
   useEffect(() => {
@@ -394,6 +408,16 @@ function App() {
             
             {/* Management Tools */}
             <div className="flex items-center gap-2 flex-wrap">
+              <NotificationButton
+                notifications={notifications}
+                tasks={tasks}
+                onDismissNotification={notificationManager.dismissNotification}
+                onClearAll={notificationManager.clearAllNotifications}
+              />
+              <NotificationSettingsDialog
+                settings={notificationSettings}
+                onSettingsChange={setNotificationSettings}
+              />
               <CategoryManager 
                 categories={categories} 
                 onUpdateCategories={setCategories} 
