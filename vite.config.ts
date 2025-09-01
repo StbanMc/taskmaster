@@ -22,4 +22,30 @@ export default defineConfig({
       '@': resolve(projectRoot, 'src')
     }
   },
+  // SEO and performance optimizations
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom'],
+          'ui-vendor': ['@phosphor-icons/react', 'sonner', 'framer-motion'],
+          'utils': ['@/lib/types', '@/lib/utils', '@/lib/notifications']
+        }
+      }
+    },
+    // Enable source maps for better debugging
+    sourcemap: true,
+    // Optimize chunk size
+    chunkSizeWarningLimit: 1000
+  },
+  // Optimize dependencies
+  optimizeDeps: {
+    include: [
+      'react', 
+      'react-dom', 
+      '@phosphor-icons/react',
+      'sonner',
+      'framer-motion'
+    ]
+  }
 });

@@ -17,12 +17,14 @@ import { LanguageSelector } from '@/components/LanguageSelector';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { TaskCompletionAnimation } from '@/components/TaskCompletionAnimation';
 import { CompletionMilestone } from '@/components/CompletionMilestone';
+import { ProductivityTips } from '@/components/ProductivityTips';
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
 import { CheckCircle, MagnifyingGlass } from '@phosphor-icons/react';
 import { Toaster, toast } from 'sonner';
 import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
 import { useNotifications } from '@/hooks/useNotifications';
+import { useSEO, StructuredData } from '@/hooks/useSEO';
 import { NotificationSettings, TaskNotification, DEFAULT_NOTIFICATION_SETTINGS } from '@/lib/notifications';
 import { I18nProvider, useI18n } from '@/contexts/I18nContext';
 import { ThemeProvider, useTheme } from '@/contexts/ThemeContext';
@@ -50,6 +52,36 @@ function TaskFlowApp() {
   });
 
   const searchInputRef = useRef<HTMLInputElement>(null);
+
+  // SEO optimization based on app state
+  const completedCount = tasks.filter(task => task.completed).length;
+  const totalCount = tasks.length;
+  const overdueCount = tasks.filter(task => isTaskOverdue(task)).length;
+  
+  useSEO({
+    title: totalCount > 0 
+      ? `TaskFlow - ${completedCount}/${totalCount} tasks completed`
+      : 'TaskFlow - Advanced Task Management & Productivity App',
+    description: totalCount > 0
+      ? `Manage your ${totalCount} tasks efficiently. ${completedCount} completed, ${totalCount - completedCount} pending${overdueCount > 0 ? `, ${overdueCount} overdue` : ''}. Stay productive with TaskFlow.`
+      : 'Boost your productivity with TaskFlow - featuring smart notifications, custom templates, keyboard shortcuts, and advanced analytics for efficient task management.'
+  });
+
+  // Dynamic structured data based on current tasks
+  const taskStructuredData = useMemo(() => ({
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "TaskFlow Tasks",
+    "description": `User's task list with ${totalCount} total tasks`,
+    "numberOfItems": totalCount,
+    "itemListElement": tasks.slice(0, 5).map((task, index) => ({
+      "@type": "Thing",
+      "position": index + 1,
+      "name": task.title,
+      "description": task.description || "Task in TaskFlow",
+      "additionalType": task.completed ? "CompletedAction" : "PendingAction"
+    }))
+  }), [tasks, totalCount]);
 
   // Initialize notifications system
   const notificationManager = useNotifications({
@@ -257,9 +289,10 @@ function TaskFlowApp() {
     );
   }, [searchFilters, activeCategory]);
 
-  const completedCount = tasks.filter(task => task.completed).length;
-  const totalCount = tasks.length;
-  const overdueCount = tasks.filter(task => isTaskOverdue(task)).length;
+  // Update counts after filtering logic
+  const finalCompletedCount = tasks.filter(task => task.completed).length;
+  const finalTotalCount = tasks.length;
+  const finalOverdueCount = tasks.filter(task => isTaskOverdue(task)).length;
 
   // Keyboard shortcuts
   const activeShortcuts = useKeyboardShortcuts([
@@ -370,6 +403,9 @@ function TaskFlowApp() {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* Dynamic Structured Data */}
+      {totalCount > 0 && <StructuredData data={taskStructuredData} />}
+      
       <div className="container mx-auto max-w-4xl px-3 md:px-4 py-6 md:py-8">
         {/* Header */}
         <div className="text-center mb-6 md:mb-8">
@@ -382,12 +418,12 @@ function TaskFlowApp() {
             </div>
           </div>
           <p className="text-sm md:text-base text-muted-foreground">{t('appSubtitle')}</p>
-          {totalCount > 0 && (
+          {finalTotalCount > 0 && (
             <div className="flex items-center justify-center gap-2 md:gap-4 mt-2 text-xs md:text-sm text-muted-foreground">
-              <span>{completedCount} {t('tasksCompleted', { total: totalCount.toString() })}</span>
-              {overdueCount > 0 && (
+              <span>{finalCompletedCount} {t('tasksCompleted', { total: finalTotalCount.toString() })}</span>
+              {finalOverdueCount > 0 && (
                 <span className="text-red-600 font-medium">
-                  {overdueCount} {t('overdue')}
+                  {finalOverdueCount} {t('overdue')}
                 </span>
               )}
             </div>
@@ -497,6 +533,9 @@ function TaskFlowApp() {
         />
       </div>
       <Toaster position="bottom-center" />
+      
+      {/* Productivity Tips */}
+      <ProductivityTips tasks={tasks} />
       
       {/* Task Completion Animation */}
       <TaskCompletionAnimation

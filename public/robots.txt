@@ -1,0 +1,20 @@
+# Robots.txt for TaskFlow
+
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://taskflow.app/sitemap.xml
+
+# Disallow admin or sensitive paths (if any in future)
+# Disallow: /admin/
+# Disallow: /api/private/
+
+# Allow important pages
+Allow: /
+Allow: /privacy
+Allow: /terms
+Allow: /help
+
+# Crawl delay (optional, adjust as needed)
+Crawl-delay: 1
