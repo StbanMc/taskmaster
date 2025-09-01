@@ -14,6 +14,7 @@ import { KeyboardShortcutsHelp } from '@/components/KeyboardShortcutsHelp';
 import { NotificationSettingsDialog } from '@/components/NotificationSettingsDialog';
 import { NotificationButton } from '@/components/NotificationButton';
 import { LanguageSelector } from '@/components/LanguageSelector';
+import { ThemeToggle } from '@/components/ThemeToggle';
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
 import { CheckCircle, MagnifyingGlass } from '@phosphor-icons/react';
@@ -22,9 +23,11 @@ import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
 import { useNotifications } from '@/hooks/useNotifications';
 import { NotificationSettings, TaskNotification, DEFAULT_NOTIFICATION_SETTINGS } from '@/lib/notifications';
 import { I18nProvider, useI18n } from '@/contexts/I18nContext';
+import { ThemeProvider, useTheme } from '@/contexts/ThemeContext';
 
 function TaskFlowApp() {
   const { t } = useI18n();
+  const { setTheme, theme } = useTheme();
   const [tasks, setTasks] = useKV<Task[]>('taskflow-tasks', []);
   const [categories, setCategories] = useKV<Category[]>('taskflow-categories', DEFAULT_CATEGORIES);
   const [templates, setTemplates] = useKV<TaskTemplate[]>('taskflow-templates', DEFAULT_TEMPLATES);
@@ -344,6 +347,16 @@ function TaskFlowApp() {
       altKey: true,
       action: () => setActiveCategory('general'),
       description: 'Filter by General category'
+    },
+    {
+      key: 'd',
+      ctrlKey: true,
+      action: () => {
+        const nextTheme = theme === 'light' ? 'dark' : theme === 'dark' ? 'system' : 'light';
+        setTheme(nextTheme);
+        toast.success(`Theme changed to ${nextTheme}`);
+      },
+      description: 'Toggle dark mode'
     }
   ]);
 
@@ -355,7 +368,10 @@ function TaskFlowApp() {
           <div className="flex items-center justify-center gap-3 mb-2">
             <CheckCircle size={32} className="text-primary" />
             <h1 className="text-3xl font-bold text-foreground">{t('appTitle')}</h1>
-            <LanguageSelector />
+            <div className="flex items-center gap-2">
+              <LanguageSelector />
+              <ThemeToggle />
+            </div>
           </div>
           <p className="text-muted-foreground">{t('appSubtitle')}</p>
           {totalCount > 0 && (
@@ -472,9 +488,11 @@ function TaskFlowApp() {
 
 function App() {
   return (
-    <I18nProvider>
-      <TaskFlowApp />
-    </I18nProvider>
+    <ThemeProvider>
+      <I18nProvider>
+        <TaskFlowApp />
+      </I18nProvider>
+    </ThemeProvider>
   );
 }
 

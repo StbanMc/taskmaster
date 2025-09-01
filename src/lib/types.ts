@@ -126,9 +126,9 @@ export const CATEGORY_ICONS = [
 ];
 
 export const PRIORITY_CONFIG = {
-  high: { label: 'High', color: 'bg-red-500', textColor: 'text-red-600' },
-  medium: { label: 'Medium', color: 'bg-yellow-500', textColor: 'text-yellow-600' },
-  low: { label: 'Low', color: 'bg-green-500', textColor: 'text-green-600' }
+  high: { label: 'High', color: 'border-l-red-500 dark:border-l-red-400', textColor: 'text-red-600 dark:text-red-400' },
+  medium: { label: 'Medium', color: 'border-l-yellow-500 dark:border-l-yellow-400', textColor: 'text-yellow-600 dark:text-yellow-400' },
+  low: { label: 'Low', color: 'border-l-green-500 dark:border-l-green-400', textColor: 'text-green-600 dark:text-green-400' }
 } as const;
 
 // Helper function to get priority config safely

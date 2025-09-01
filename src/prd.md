@@ -45,6 +45,7 @@
 - **Template Access**: Ctrl+T to open template picker
 - **Select All**: Ctrl+A to select all visible tasks
 - **Clear Everything**: Escape to clear selection and filters
+- **Theme Toggle**: Ctrl+D to cycle through light, dark, and system theme modes
 - **Category Quick Access**: Alt+1-5 to filter by default categories (Personal, Work, Shopping, Health, General)
 - **Keyboard Help**: Dedicated shortcuts help dialog showing all available shortcuts
 - **Context Awareness**: Shortcuts disabled when typing in input fields
@@ -92,6 +93,8 @@
 - **Smart Defaults**: Intelligent default values and seamless data migration
 - **Help Integration**: Built-in keyboard shortcuts reference and category management guidance
 - **Progressive Disclosure**: Advanced features accessible but not overwhelming
+- **Dark Mode Support**: Complete light/dark/system theme support with smooth transitions and optimized contrast
+- **Theme Persistence**: User theme preference saved and automatically restored
 
 ## Design Direction
 
@@ -102,11 +105,13 @@
 - **Simplicity Spectrum**: Sophisticated interface that reveals power features progressively
 
 ### Color Strategy
-- **Color Scheme Type**: Extended palette with user customization
-- **Primary Color**: Deep blue (oklch(0.45 0.15 240)) for trustworthy, professional feel
-- **Secondary Colors**: Muted blue-gray tones for supporting elements
-- **Accent Color**: Fresh green (oklch(0.7 0.15 150)) for positive actions and completion
-- **Category Colors**: 12 distinct colors for user customization
+- **Color Scheme Type**: Dual-theme palette (light/dark) with user customization
+- **Primary Color**: Deep blue (oklch(0.45 0.15 240)) for trustworthy, professional feel - adapts to oklch(0.6 0.15 240) in dark mode
+- **Secondary Colors**: Muted blue-gray tones for supporting elements with dark mode variants
+- **Accent Color**: Fresh green (oklch(0.7 0.15 150)) for positive actions and completion - adjusted to oklch(0.55 0.15 150) in dark mode  
+- **Category Colors**: 12 distinct colors for user customization with optimized dark mode variants
+- **Theme Adaptation**: All colors tested for WCAG AA compliance in both light and dark themes
+- **Smooth Transitions**: 200ms ease-in-out transitions between theme changes
 - **Color Psychology**: Blue conveys trust and productivity, green represents completion and growth
 
 ### Typography System

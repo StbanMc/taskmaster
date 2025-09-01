@@ -6,9 +6,42 @@
     @apply border-border;
   }
   
+  html {
+    transition: color-scheme 0.2s ease-in-out;
+  }
+  
   body {
     font-family: 'Inter', sans-serif;
     @apply bg-background text-foreground antialiased;
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  }
+  
+  /* Smooth transitions for theme switching */
+  * {
+    transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  }
+  
+  /* Better scrollbar styling for dark mode */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    @apply bg-muted;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    @apply bg-muted-foreground/30 rounded-sm;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-muted-foreground/50;
+  }
+  
+  /* Dark mode specific adjustments */
+  .dark {
+    color-scheme: dark;
   }
 }
 
@@ -33,6 +66,28 @@
   --input: oklch(0.9 0 0);
   --ring: oklch(0.45 0.15 240);
   --radius: 0.5rem;
+}
+
+.dark {
+  --background: oklch(0.09 0.01 240);
+  --foreground: oklch(0.95 0.01 240);
+  --card: oklch(0.12 0.02 240);
+  --card-foreground: oklch(0.95 0.01 240);
+  --popover: oklch(0.09 0.01 240);
+  --popover-foreground: oklch(0.95 0.01 240);
+  --primary: oklch(0.6 0.15 240);
+  --primary-foreground: oklch(0.05 0 0);
+  --secondary: oklch(0.15 0.04 240);
+  --secondary-foreground: oklch(0.95 0.01 240);
+  --muted: oklch(0.15 0.02 240);
+  --muted-foreground: oklch(0.6 0.02 240);
+  --accent: oklch(0.55 0.15 150);
+  --accent-foreground: oklch(0.05 0 0);
+  --destructive: oklch(0.62 0.2 25);
+  --destructive-foreground: oklch(0.98 0.01 25);
+  --border: oklch(0.2 0.02 240);
+  --input: oklch(0.2 0.02 240);
+  --ring: oklch(0.6 0.15 240);
 }
 
 @theme {

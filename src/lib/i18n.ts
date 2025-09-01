@@ -25,6 +25,7 @@ export interface Translations {
   editTask: string;
   deleteTask: string;
   selectTask: string;
+  deselectTask: string;
   completed: string;
   
   // Categories
@@ -95,6 +96,12 @@ export interface Translations {
   hoursAgo: string;
   dayAgo: string;
   daysAgo: string;
+  
+  // Theme
+  'theme.light': string;
+  'theme.dark': string;
+  'theme.system': string;
+  'theme.toggleTheme': string;
 }
 
 export const translations: Record<string, Translations> = {
@@ -125,6 +132,7 @@ export const translations: Record<string, Translations> = {
     editTask: "Edit task",
     deleteTask: "Delete task",
     selectTask: "Select task",
+    deselectTask: "Deselect task",
     completed: "Completed",
     
     // Categories
@@ -194,7 +202,13 @@ export const translations: Record<string, Translations> = {
     hourAgo: "1 hour ago",
     hoursAgo: "{hours} hours ago",
     dayAgo: "1 day ago",
-    daysAgo: "{days} days ago"
+    daysAgo: "{days} days ago",
+    
+    // Theme
+    'theme.light': "Light",
+    'theme.dark': "Dark",
+    'theme.system': "System",
+    'theme.toggleTheme': "Toggle theme"
   },
   
   es: {
@@ -224,6 +238,7 @@ export const translations: Record<string, Translations> = {
     editTask: "Editar tarea",
     deleteTask: "Eliminar tarea",
     selectTask: "Seleccionar tarea",
+    deselectTask: "Deseleccionar tarea",
     completed: "Completada",
     
     // Categories
@@ -293,7 +308,13 @@ export const translations: Record<string, Translations> = {
     hourAgo: "hace 1 hora",
     hoursAgo: "hace {hours} horas",
     dayAgo: "hace 1 día",
-    daysAgo: "hace {days} días"
+    daysAgo: "hace {days} días",
+    
+    // Theme
+    'theme.light': "Claro",
+    'theme.dark': "Oscuro",
+    'theme.system': "Sistema",
+    'theme.toggleTheme': "Cambiar tema"
   }
 };
 

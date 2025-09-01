@@ -91,7 +91,7 @@ export function TaskSearch({ filters, onFiltersChange, hasActiveFilters }: TaskS
         <Popover open={isFilterOpen} onOpenChange={setIsFilterOpen}>
           <PopoverTrigger asChild>
             <Button variant="outline" size="sm" className="gap-2">
-              <Funnel size={14} />
+              <Funnel size={14} className="shrink-0" />
               {t('filters')}
               {hasActiveFilters && (
                 <Badge variant="secondary" className="ml-1 px-1.5 py-0.5 text-xs">

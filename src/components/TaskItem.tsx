@@ -5,6 +5,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { useI18n } from '@/contexts/I18nContext';
 
 interface TaskItemProps {
   task: Task;
@@ -25,6 +26,7 @@ export function TaskItem({
   onSelectToggle,
   showSelectMode = false
 }: TaskItemProps) {
+  const { t } = useI18n();
   const priorityConfig = getPriorityConfig(task.priority);
   const overdue = isTaskOverdue(task);
   
@@ -33,8 +35,8 @@ export function TaskItem({
       <Card className={cn(
         "p-4 transition-all hover:shadow-md border-l-4",
         task.completed && "opacity-60",
-        `border-l-${priorityConfig.color.replace('bg-', '')}`,
-        overdue && !task.completed && "bg-red-50 border-red-200",
+        priorityConfig.color,
+        overdue && !task.completed && "bg-red-50 dark:bg-red-950/20 border-red-200 dark:border-red-800",
         isSelected && "ring-2 ring-primary ring-offset-1"
       )}>
         <div className="flex items-start gap-3">
@@ -44,8 +46,9 @@ export function TaskItem({
               size="sm"
               className="h-6 w-6 p-0 mt-0.5"
               onClick={() => onSelectToggle?.(task.id)}
+              aria-label={isSelected ? t('deselectTask') : t('selectTask')}
             >
-              {isSelected ? <CheckSquare size={16} /> : <Square size={16} />}
+              {isSelected ? <CheckSquare size={16} className="shrink-0" /> : <Square size={16} className="shrink-0" />}
             </Button>
           )}
           
@@ -121,8 +124,9 @@ export function TaskItem({
                 size="sm"
                 onClick={() => onDelete(task.id)}
                 className="h-8 w-8 p-0 text-muted-foreground hover:text-destructive flex-shrink-0"
+                aria-label={t('deleteTask')}
               >
-                <Trash size={14} />
+                <Trash size={14} className="shrink-0" />
               </Button>
             </div>
           </div>
