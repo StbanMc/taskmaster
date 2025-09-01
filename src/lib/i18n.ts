@@ -71,6 +71,9 @@ export interface Translations {
   notifications: string;
   keyboardShortcuts: string;
   exportData: string;
+  editCategory: string;
+  deleteCategory: string;
+  manageCategories: string;
   
   // Due dates and urgency
   dueTomorrow: string;
@@ -178,6 +181,9 @@ export const translations: Record<string, Translations> = {
     notifications: "Notifications",
     keyboardShortcuts: "Keyboard Shortcuts",
     exportData: "Export Data",
+    editCategory: "Edit Category",
+    deleteCategory: "Delete Category", 
+    manageCategories: "Manage Categories",
     
     // Due dates and urgency
     dueTomorrow: "Due tomorrow",
@@ -305,6 +311,9 @@ export const translations: Record<string, Translations> = {
     notifications: "Notificaciones",
     keyboardShortcuts: "Atajos de Teclado",
     exportData: "Exportar Datos",
+    editCategory: "Editar Categoría",
+    deleteCategory: "Eliminar Categoría",
+    manageCategories: "Administrar Categorías",
     
     // Due dates and urgency
     dueTomorrow: "Vence mañana",

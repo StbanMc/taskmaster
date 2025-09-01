@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Task } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { TrashSimple, CheckCircle, XCircle, Square, CheckSquare } from '@phosphor-icons/react';
+import { Trash, CheckCircle, XCircle, Square, CheckSquare } from '@phosphor-icons/react';
 import { toast } from 'sonner';
 
 interface BulkActionsProps {
@@ -165,7 +165,7 @@ export function BulkActions({
             disabled={isProcessing}
             className="gap-2 text-destructive hover:text-destructive"
           >
-            <TrashSimple size={14} />
+            <Trash size={14} />
             Delete
           </Button>
 

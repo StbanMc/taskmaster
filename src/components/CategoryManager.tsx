@@ -7,10 +7,11 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { Settings, Plus, TrashSimple, Edit } from '@phosphor-icons/react';
+import { Settings, Plus, Trash, Pencil } from '@phosphor-icons/react';
 import * as Icons from '@phosphor-icons/react';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
+import { useI18n } from '@/contexts/I18nContext';
 
 interface CategoryManagerProps {
   categories: Category[];
@@ -19,6 +20,7 @@ interface CategoryManagerProps {
 }
 
 export const CategoryManager = ({ categories, onUpdateCategories, tasks }: CategoryManagerProps) => {
+  const { t } = useI18n();
   const [isOpen, setIsOpen] = useState(false);
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
   const [formData, setFormData] = useState({
@@ -93,14 +95,14 @@ export const CategoryManager = ({ categories, onUpdateCategories, tasks }: Categ
       <DialogTrigger asChild>
         <Button variant="outline" size="sm" className="gap-2">
           <Settings className="w-4 h-4" />
-          Manage Categories
+          {t('manageCategories')}
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-4xl max-h-[80vh] overflow-hidden flex flex-col">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Settings className="w-5 h-5" />
-            Category Management
+            {t('manageCategories')}
           </DialogTitle>
         </DialogHeader>
 
@@ -231,17 +233,20 @@ export const CategoryManager = ({ categories, onUpdateCategories, tasks }: Categ
                             variant="ghost"
                             size="sm"
                             onClick={() => handleEditCategory(category)}
+                            className="h-8 w-8 p-0"
+                            title={t('editCategory')}
                           >
-                            <Edit className="w-3 h-3" />
+                            <Pencil size={16} />
                           </Button>
                           {category.isCustom && taskCount === 0 && (
                             <Button
                               variant="ghost"
                               size="sm"
                               onClick={() => handleDeleteCategory(category.id)}
-                              className="text-destructive hover:text-destructive"
+                              className="text-destructive hover:text-destructive h-8 w-8 p-0"
+                              title={t('deleteCategory')}
                             >
-                              <TrashSimple className="w-3 h-3" />
+                              <Trash size={16} />
                             </Button>
                           )}
                         </div>

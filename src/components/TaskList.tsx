@@ -5,7 +5,7 @@ import { SortableTaskList } from './SortableTaskList';
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { ChevronDown, ChevronRight, CheckCircle } from '@phosphor-icons/react';
+import { CaretDown, CaretRight, CheckCircle } from '@phosphor-icons/react';
 import { useI18n } from '@/contexts/I18nContext';
 import { AnimatePresence, motion } from 'framer-motion';
 
@@ -92,12 +92,13 @@ export function TaskList({
               <Button 
                 variant="ghost" 
                 className="w-full justify-between p-0 h-auto font-semibold text-muted-foreground hover:text-foreground"
+                title={showCompleted ? t('hideCompletedTasks') : t('showCompletedTasks')}
               >
                 <div className="flex items-center gap-2">
                   <CheckCircle size={20} />
                   <span>{t('completedTasks')} ({completedTasks.length})</span>
                 </div>
-                {showCompleted ? <ChevronDown size={20} /> : <ChevronRight size={20} />}
+                {showCompleted ? <CaretDown size={20} /> : <CaretRight size={20} />}
               </Button>
             </CollapsibleTrigger>
             <CollapsibleContent className="space-y-2 mt-3">

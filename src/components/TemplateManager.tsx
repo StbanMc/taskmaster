@@ -9,7 +9,7 @@ import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { BookmarkSimple, Plus, Clock, Repeat } from '@phosphor-icons/react';
+import { Bookmark, Plus, Clock, Repeat } from '@phosphor-icons/react';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 
@@ -93,14 +93,14 @@ export const TemplateManager = ({
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button variant="outline" size="sm" className="gap-2">
-          <BookmarkSimple className="w-4 h-4" />
+          <Bookmark className="w-4 h-4" />
           Manage Templates
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden flex flex-col">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
-            <BookmarkSimple className="w-5 h-5" />
+            <Bookmark className="w-5 h-5" />
             Template Management
           </DialogTitle>
         </DialogHeader>

@@ -1,6 +1,6 @@
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { DotsSixVertical, TrashSimple, Calendar, Square, CheckSquare } from '@phosphor-icons/react';
+import { DotsSixVertical, Trash, Calendar, Square, CheckSquare } from '@phosphor-icons/react';
 import { Task, Category, getPriorityConfig, formatDate, isTaskOverdue } from '@/lib/types';
 import { Card } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -160,7 +160,7 @@ export function SortableTaskItem({
                 onClick={() => onDelete(task.id)}
                 className="h-8 w-8 p-0 text-muted-foreground hover:text-destructive flex-shrink-0"
               >
-                <TrashSimple size={14} />
+                <Trash size={14} />
               </Button>
             </div>
           </div>
