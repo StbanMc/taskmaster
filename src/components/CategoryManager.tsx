@@ -98,15 +98,15 @@ export const CategoryManager = ({ categories, onUpdateCategories, tasks }: Categ
           {t('manageCategories')}
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-w-5xl max-h-[85vh] overflow-hidden flex flex-col">
-        <DialogHeader className="pb-4">
+      <DialogContent className="max-w-6xl max-h-[90vh] overflow-hidden flex flex-col mx-4">
+        <DialogHeader className="pb-4 flex-shrink-0">
           <DialogTitle className="flex items-center gap-2 text-xl">
             <FolderOpen className="w-6 h-6" />
             {t('manageCategories')}
           </DialogTitle>
         </DialogHeader>
 
-        <div className="flex-1 overflow-y-auto space-y-8 px-1">
+        <div className="flex-1 overflow-y-auto space-y-8 px-1 pb-4">
           {/* Add/Edit Category Form */}
           <Card className="border-2">
             <CardHeader className="pb-4">
@@ -116,9 +116,9 @@ export const CategoryManager = ({ categories, onUpdateCategories, tasks }: Categ
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {/* Name Input */}
-                <div className="space-y-3">
+                <div className="space-y-3 md:col-span-2 lg:col-span-1">
                   <Label htmlFor="category-name" className="text-sm font-medium">Category Name</Label>
                   <Input
                     id="category-name"
@@ -126,21 +126,23 @@ export const CategoryManager = ({ categories, onUpdateCategories, tasks }: Categ
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     placeholder="Enter category name"
                     maxLength={20}
-                    className="h-10"
+                    className="h-11"
                   />
                 </div>
 
                 {/* Color Picker */}
                 <div className="space-y-3">
                   <Label className="text-sm font-medium">Category Color</Label>
-                  <div className="grid grid-cols-6 gap-3">
+                  <div className="grid grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-4">
                     {CATEGORY_COLORS.map(color => (
                       <button
                         key={color}
                         className={cn(
-                          "w-10 h-10 rounded-lg border-2 transition-all hover:scale-105",
+                          "w-12 h-12 rounded-lg border-2 transition-all hover:scale-105 min-h-[44px]",
                           color,
-                          formData.color === color ? "border-foreground scale-110 ring-2 ring-primary/20" : "border-muted"
+                          formData.color === color 
+                            ? "border-foreground scale-110 ring-2 ring-primary/20 shadow-lg" 
+                            : "border-muted hover:border-foreground/50"
                         )}
                         onClick={() => setFormData({ ...formData, color })}
                         title={color}
@@ -152,18 +154,20 @@ export const CategoryManager = ({ categories, onUpdateCategories, tasks }: Categ
                 {/* Icon Picker */}
                 <div className="space-y-3">
                   <Label className="text-sm font-medium">Category Icon</Label>
-                  <div className="grid grid-cols-8 gap-2 max-h-32 overflow-y-auto border rounded-lg p-2 bg-muted/30">
+                  <div className="grid grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-3 max-h-40 overflow-y-auto border rounded-lg p-4 bg-muted/30">
                     {CATEGORY_ICONS.map(icon => (
                       <button
                         key={icon}
                         className={cn(
-                          "p-2.5 rounded-lg border transition-all hover:bg-muted hover:scale-105",
-                          formData.icon === icon ? "border-primary bg-primary/10 scale-105" : "border-muted/50"
+                          "p-3 rounded-lg border-2 transition-all hover:bg-muted hover:scale-105 min-h-[44px] flex items-center justify-center",
+                          formData.icon === icon 
+                            ? "border-primary bg-primary/10 scale-105 shadow-md" 
+                            : "border-muted/50 hover:border-primary/30"
                         )}
                         onClick={() => setFormData({ ...formData, icon })}
                         title={icon}
                       >
-                        {renderIcon(icon, "w-4 h-4")}
+                        {renderIcon(icon, "w-5 h-5")}
                       </button>
                     ))}
                   </div>
@@ -218,24 +222,24 @@ export const CategoryManager = ({ categories, onUpdateCategories, tasks }: Categ
               <FolderOpen className="w-5 h-5" />
               Existing Categories
             </h3>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
               {categories.map(category => {
                 const taskCount = tasks.filter(task => task.category === category.id).length;
                 
                 return (
                   <Card key={category.id} className="hover:shadow-md transition-all duration-200">
-                    <CardContent className="p-5">
+                    <CardContent className="p-4">
                       <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-4">
-                          <div className={cn("p-3 rounded-lg shadow-sm", category.color)}>
-                            {renderIcon(category.icon, "w-5 h-5 text-white")}
+                        <div className="flex items-center gap-3 flex-1 min-w-0">
+                          <div className={cn("p-2.5 rounded-lg shadow-sm flex-shrink-0", category.color)}>
+                            {renderIcon(category.icon, "w-4 h-4 text-white")}
                           </div>
-                          <div className="space-y-1">
-                            <h4 className="font-semibold text-base">{category.name}</h4>
-                            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                          <div className="space-y-0.5 min-w-0 flex-1">
+                            <h4 className="font-semibold text-sm truncate">{category.name}</h4>
+                            <div className="flex items-center gap-2 text-xs text-muted-foreground">
                               <span>{taskCount} task{taskCount !== 1 ? 's' : ''}</span>
                               {!category.isCustom && (
-                                <Badge variant="secondary" className="text-xs px-2 py-0.5">
+                                <Badge variant="secondary" className="text-[10px] px-1.5 py-0.5">
                                   Default
                                 </Badge>
                               )}
@@ -243,25 +247,25 @@ export const CategoryManager = ({ categories, onUpdateCategories, tasks }: Categ
                           </div>
                         </div>
                         
-                        <div className="flex gap-2">
+                        <div className="flex gap-1 flex-shrink-0">
                           <Button
                             variant="ghost"
                             size="sm"
                             onClick={() => handleEditCategory(category)}
-                            className="h-9 w-9 p-0 hover:bg-primary/10"
+                            className="h-8 w-8 p-0 hover:bg-primary/10"
                             title={t('editCategory')}
                           >
-                            <Pencil size={16} />
+                            <Pencil size={14} />
                           </Button>
                           {category.isCustom && taskCount === 0 && (
                             <Button
                               variant="ghost"
                               size="sm"
                               onClick={() => handleDeleteCategory(category.id)}
-                              className="text-destructive hover:text-destructive hover:bg-destructive/10 h-9 w-9 p-0"
+                              className="text-destructive hover:text-destructive hover:bg-destructive/10 h-8 w-8 p-0"
                               title={t('deleteCategory')}
                             >
-                              <Trash size={16} />
+                              <Trash size={14} />
                             </Button>
                           )}
                         </div>
