@@ -21,6 +21,9 @@ interface SortableTaskListProps {
   onToggleTask: (id: string) => void;
   onDeleteTask: (id: string) => void;
   onReorderTasks: (tasks: Task[]) => void;
+  selectedTasks: string[];
+  onSelectTask: (id: string) => void;
+  showSelectMode: boolean;
 }
 
 export function SortableTaskList({ 
@@ -28,7 +31,10 @@ export function SortableTaskList({
   categories, 
   onToggleTask, 
   onDeleteTask, 
-  onReorderTasks 
+  onReorderTasks,
+  selectedTasks,
+  onSelectTask,
+  showSelectMode
 }: SortableTaskListProps) {
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -92,6 +98,9 @@ export function SortableTaskList({
               onToggle={onToggleTask}
               onDelete={onDeleteTask}
               isDragDisabled={task.completed}
+              isSelected={selectedTasks.includes(task.id)}
+              onSelectToggle={onSelectTask}
+              showSelectMode={showSelectMode}
             />
           ))}
         </div>

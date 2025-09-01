@@ -1,4 +1,4 @@
-import { Task, Category } from '@/lib/types';
+import { Task, Category, getTaskUrgency } from '@/lib/types';
 import { TaskItem } from './TaskItem';
 import { SortableTaskList } from './SortableTaskList';
 import { Separator } from '@/components/ui/separator';
@@ -9,19 +9,26 @@ interface TaskListProps {
   onToggleTask: (id: string) => void;
   onDeleteTask: (id: string) => void;
   onReorderTasks: (tasks: Task[]) => void;
+  selectedTasks: string[];
+  onSelectTask: (id: string) => void;
+  showSelectMode: boolean;
 }
 
-export function TaskList({ tasks, categories, onToggleTask, onDeleteTask, onReorderTasks }: TaskListProps) {
+export function TaskList({ 
+  tasks, 
+  categories, 
+  onToggleTask, 
+  onDeleteTask, 
+  onReorderTasks, 
+  selectedTasks,
+  onSelectTask,
+  showSelectMode
+}: TaskListProps) {
   const pendingTasks = tasks.filter(task => !task.completed);
   const completedTasks = tasks.filter(task => task.completed);
 
-  // Sort pending tasks by priority (high -> medium -> low)
-  const priorityOrder = { high: 0, medium: 1, low: 2 };
-  const sortedPendingTasks = pendingTasks.sort((a, b) => {
-    const aPriority = priorityOrder[a.priority || 'medium'];
-    const bPriority = priorityOrder[b.priority || 'medium'];
-    return aPriority - bPriority;
-  });
+  // Sort pending tasks by urgency (combines priority and due date)
+  const sortedPendingTasks = pendingTasks.sort((a, b) => getTaskUrgency(b) - getTaskUrgency(a));
 
   const getCategoryById = (categoryId: string) => 
     categories.find(cat => cat.id === categoryId);
@@ -35,8 +42,10 @@ export function TaskList({ tasks, categories, onToggleTask, onDeleteTask, onReor
   if (tasks.length === 0) {
     return (
       <div className="text-center py-12">
-        <p className="text-muted-foreground text-lg">No tasks yet</p>
-        <p className="text-muted-foreground text-sm mt-1">Add your first task to get started</p>
+        <p className="text-muted-foreground text-lg">No tasks found</p>
+        <p className="text-muted-foreground text-sm mt-1">
+          Try adjusting your search or filters, or add a new task
+        </p>
       </div>
     );
   }
@@ -55,6 +64,9 @@ export function TaskList({ tasks, categories, onToggleTask, onDeleteTask, onReor
             onToggleTask={onToggleTask}
             onDeleteTask={onDeleteTask}
             onReorderTasks={handleReorderPendingTasks}
+            selectedTasks={selectedTasks}
+            onSelectTask={onSelectTask}
+            showSelectMode={showSelectMode}
           />
         </div>
       )}
@@ -78,6 +90,9 @@ export function TaskList({ tasks, categories, onToggleTask, onDeleteTask, onReor
                 category={getCategoryById(task.category)}
                 onToggle={onToggleTask}
                 onDelete={onDeleteTask}
+                isSelected={selectedTasks.includes(task.id)}
+                onSelectToggle={onSelectTask}
+                showSelectMode={showSelectMode}
               />
             ))}
           </div>

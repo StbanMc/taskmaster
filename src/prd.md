@@ -1,35 +1,54 @@
 # TaskFlow - Task Management Application PRD
 
 ## Core Purpose & Success
-- **Mission Statement**: TaskFlow helps users organize their daily tasks efficiently through categorization, priority levels, and drag-and-drop reordering, creating a smooth workflow management experience.
+- **Mission Statement**: TaskFlow provides comprehensive task management with advanced search, filtering, analytics, bulk operations, and data export capabilities, creating a professional-grade productivity solution.
 - **Success Indicators**: Users can quickly add tasks with priorities, organize them by categories, reorder through intuitive drag-and-drop, and track completion progress.
 - **Experience Qualities**: Clean, Intuitive, Productive
 
 ## Project Classification & Approach
-- **Complexity Level**: Light Application (multiple features with persistent state)
-- **Primary User Activity**: Creating and managing tasks with organization capabilities
+- **Complexity Level**: Complex Application (advanced functionality with comprehensive feature set)
+- **Primary User Activity**: Creating, organizing, searching, and analyzing personal task management with productivity insights
 
 ## Essential Features
 
-### Task Management
-- **Add Tasks**: Users can create new tasks with titles, assign categories, and set priority levels
+### Enhanced Task Management
+- **Add Tasks**: Users can create new tasks with titles, descriptions, due dates, assign categories, and set priority levels
 - **Task Priorities**: Three-level priority system (High, Medium, Low) with visual color indicators
-- **Complete Tasks**: Toggle completion status with visual feedback
+- **Due Dates**: Optional due dates with overdue indicators and smart sorting by urgency
+- **Task Descriptions**: Optional detailed descriptions for additional context
+- **Complete Tasks**: Toggle completion status with visual feedback and completion timestamps
 - **Delete Tasks**: Remove tasks with confirmation feedback
 - **Drag & Drop Reordering**: Reorder pending tasks by dragging them into preferred sequence
+- **Bulk Operations**: Select multiple tasks for bulk completion, reopening, or deletion
 
-### Organization
+### Advanced Organization & Search
 - **Category System**: Pre-defined categories (Personal, Work, Shopping, Health, General) with color coding
 - **Priority System**: High (red), Medium (yellow), Low (green) priorities with color-coded indicators
+- **Smart Search**: Full-text search through task titles and descriptions
+- **Advanced Filtering**: Filter by priority, due date, completion status, and overdue tasks
 - **Category Filtering**: View tasks by specific categories or see all tasks
-- **Priority Sorting**: Automatic sorting by priority (high → medium → low) within pending tasks
+- **Intelligent Sorting**: Automatic sorting by urgency (combines priority and due date proximity)
 - **Task Counters**: Display pending task counts per category
 
-### User Experience
+### Analytics & Insights
+- **Task Statistics**: Completion rate tracking with progress visualization
+- **Productivity Metrics**: Weekly completion trends and overdue task alerts
+- **Due Date Tracking**: Tasks due today, tomorrow, and overdue with visual indicators
+- **Priority Breakdown**: Visual distribution of pending tasks by priority level
+- **Progress Monitoring**: Real-time updates on completion percentages
+
+### Data Management
+- **Export Functionality**: Export task data in CSV, JSON, or readable text formats
 - **Persistent Storage**: All tasks and preferences saved using useKV for cross-session persistence
-- **Visual Feedback**: Toast notifications for all actions (add, complete, delete, reorder)
+- **Data Migration**: Automatic upgrading of existing task data to include new fields
+- **Bulk Selection**: Multi-task selection with keyboard and mouse support
+
+### User Experience
+- **Visual Feedback**: Toast notifications for all actions (add, complete, delete, reorder, export)
 - **Responsive Design**: Works seamlessly across desktop and mobile devices
-- **Accessibility**: Keyboard navigation support for drag-and-drop operations
+- **Accessibility**: Keyboard navigation support for drag-and-drop operations and bulk selection
+- **Smart Defaults**: Intelligent default values for new tasks and reasonable migration of existing data
+- **Empty States**: Helpful guidance when no tasks match current filters or searches
 
 ## Design Direction
 
