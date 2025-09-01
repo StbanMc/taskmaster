@@ -1,7 +1,7 @@
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { DotsSixVertical, Trash2 } from '@phosphor-icons/react';
-import { Task, Category, PRIORITY_CONFIG } from '@/lib/types';
+import { Task, Category, getPriorityConfig } from '@/lib/types';
 import { Card } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
@@ -39,7 +39,7 @@ export function SortableTaskItem({
     transition,
   };
 
-  const priorityConfig = PRIORITY_CONFIG[task.priority || 'medium'];
+  const priorityConfig = getPriorityConfig(task.priority);
   
   return (
     <div 

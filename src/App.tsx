@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from 'react';
 import { useKV } from '@github/spark/hooks';
-import { Task, Category, DEFAULT_CATEGORIES } from '@/lib/types';
+import { Task, Category, Priority, DEFAULT_CATEGORIES } from '@/lib/types';
 import { AddTaskForm } from '@/components/AddTaskForm';
 import { TaskList } from '@/components/TaskList';
 import { CategoryFilter } from '@/components/CategoryFilter';
@@ -15,17 +15,15 @@ function App() {
 
   // Migrate existing tasks to include priority field
   useEffect(() => {
-    const migrateTasks = () => {
+    if (tasks.length > 0 && tasks.some(task => !task.priority || !['high', 'medium', 'low'].includes(task.priority))) {
       setTasks(currentTasks => 
         currentTasks.map(task => ({
           ...task,
-          priority: task.priority || 'medium' // Default to medium priority for existing tasks
+          priority: (task.priority && ['high', 'medium', 'low'].includes(task.priority)) 
+            ? task.priority 
+            : 'medium' as Priority // Default to medium priority for existing tasks
         }))
       );
-    };
-    
-    if (tasks.length > 0 && tasks.some(task => !task.priority)) {
-      migrateTasks();
     }
   }, [tasks, setTasks]);
 

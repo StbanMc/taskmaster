@@ -1,5 +1,5 @@
 import { Trash2 } from '@phosphor-icons/react';
-import { Task, Category, PRIORITY_CONFIG } from '@/lib/types';
+import { Task, Category, getPriorityConfig } from '@/lib/types';
 import { Card } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
@@ -14,7 +14,7 @@ interface TaskItemProps {
 }
 
 export function TaskItem({ task, category, onToggle, onDelete }: TaskItemProps) {
-  const priorityConfig = PRIORITY_CONFIG[task.priority];
+  const priorityConfig = getPriorityConfig(task.priority);
   
   return (
     <div className="animate-in fade-in slide-in-from-left-4 duration-200">

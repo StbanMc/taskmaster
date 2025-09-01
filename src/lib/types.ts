@@ -28,3 +28,11 @@ export const PRIORITY_CONFIG = {
   medium: { label: 'Medium', color: 'bg-yellow-500', textColor: 'text-yellow-600' },
   low: { label: 'Low', color: 'bg-green-500', textColor: 'text-green-600' }
 } as const;
+
+// Helper function to get priority config safely
+export function getPriorityConfig(priority: Priority | undefined): typeof PRIORITY_CONFIG.medium {
+  if (!priority || !(priority in PRIORITY_CONFIG)) {
+    return PRIORITY_CONFIG.medium;
+  }
+  return PRIORITY_CONFIG[priority];
+}
