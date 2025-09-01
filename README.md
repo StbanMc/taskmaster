@@ -242,12 +242,12 @@ TaskFlow is optimized for search engines with:
 
 ### 👨‍💻 Autor / Author
 
-Desarrollado con ❤️ por [Tu Nombre] / Developed with ❤️ by [Your Name]
+Desarrollado con ❤️ por Esteban Esquivel / Developed with ❤️ by Esteban Esquivel
 
 ### 📞 Contacto / Contact
 
-- GitHub: [@tu-usuario](https://github.com/tu-usuario)
-- Email: tu-email@ejemplo.com
+- GitHub: [@StbanMc](https://github.com/StbanMC)
+
 
 ---
 
