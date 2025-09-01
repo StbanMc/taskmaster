@@ -1,4 +1,4 @@
-import { Trash2, Calendar, Clock, Square, CheckSquare } from '@phosphor-icons/react';
+import { Trash, Calendar, Clock, Square, CheckSquare } from '@phosphor-icons/react';
 import { Task, Category, getPriorityConfig, formatDate, isTaskOverdue } from '@/lib/types';
 import { Card } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -122,7 +122,7 @@ export function TaskItem({
                 onClick={() => onDelete(task.id)}
                 className="h-8 w-8 p-0 text-muted-foreground hover:text-destructive flex-shrink-0"
               >
-                <Trash2 size={14} />
+                <Trash size={14} />
               </Button>
             </div>
           </div>

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Search, X, Filter } from '@phosphor-icons/react';
+import { MagnifyingGlass, X, Funnel } from '@phosphor-icons/react';
 import { Priority, PRIORITY_CONFIG } from '@/lib/types';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -67,7 +67,7 @@ export function TaskSearch({ filters, onFiltersChange, hasActiveFilters }: TaskS
     <div className="space-y-3">
       {/* Search Bar */}
       <div className="relative">
-        <Search size={16} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
+        <MagnifyingGlass size={16} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
         <Input
           placeholder={t('searchTasks')}
           value={filters.search}
@@ -91,8 +91,8 @@ export function TaskSearch({ filters, onFiltersChange, hasActiveFilters }: TaskS
         <Popover open={isFilterOpen} onOpenChange={setIsFilterOpen}>
           <PopoverTrigger asChild>
             <Button variant="outline" size="sm" className="gap-2">
-              <Filter size={14} />
-              Filters
+              <Funnel size={14} />
+              {t('filters')}
               {hasActiveFilters && (
                 <Badge variant="secondary" className="ml-1 px-1.5 py-0.5 text-xs">
                   On

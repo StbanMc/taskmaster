@@ -36,6 +36,7 @@ export interface Translations {
   
   // Search and Filters
   searchTasks: string;
+  filters: string;
   filterByPriority: string;
   allPriorities: string;
   showCompleted: string;
@@ -135,6 +136,7 @@ export const translations: Record<string, Translations> = {
     
     // Search and Filters
     searchTasks: "Search tasks...",
+    filters: "Filters",
     filterByPriority: "Filter by priority",
     allPriorities: "All priorities",
     showCompleted: "Show completed",
@@ -233,6 +235,7 @@ export const translations: Record<string, Translations> = {
     
     // Search and Filters
     searchTasks: "Buscar tareas...",
+    filters: "Filtros",
     filterByPriority: "Filtrar por prioridad",
     allPriorities: "Todas las prioridades",
     showCompleted: "Mostrar completadas",
