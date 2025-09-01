@@ -87,64 +87,69 @@ export function AddTaskForm({ onAddTask, categories, templates, onQuickAdd }: Ad
 
   return (
     <>
-      <Card className="p-4">
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="flex gap-3">
+      <Card className="p-3 md:p-4">
+        <form onSubmit={handleSubmit} className="space-y-3 md:space-y-4">
+          <div className="flex flex-col md:flex-row gap-2 md:gap-3">
             <div className="flex-1">
               <Input
                 placeholder={t('addTaskPlaceholder')}
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="border-0 shadow-none focus-visible:ring-0 text-base"
+                className="border-0 shadow-none focus-visible:ring-0 text-sm md:text-base h-10 md:h-auto"
               />
             </div>
             
-            <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-              <SelectTrigger className="w-32">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {categories.map((category) => (
-                  <SelectItem key={category.id} value={category.id}>
-                    <div className="flex items-center gap-2">
-                      <div className={`w-2 h-2 rounded-full ${category.color}`} />
-                      {getCategoryName(category.id, t)}
-                    </div>
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <div className="flex gap-2 md:gap-3">
+              <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                <SelectTrigger className="w-24 md:w-32 text-xs md:text-sm">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {categories.map((category) => (
+                    <SelectItem key={category.id} value={category.id}>
+                      <div className="flex items-center gap-2">
+                        <div className={`w-2 h-2 rounded-full ${category.color}`} />
+                        <span className="truncate">{getCategoryName(category.id, t)}</span>
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
 
-            <Select value={selectedPriority} onValueChange={(value: Priority) => setSelectedPriority(value)}>
-              <SelectTrigger className="w-24">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {Object.entries(PRIORITY_CONFIG).map(([priority, config]) => (
-                  <SelectItem key={priority} value={priority}>
-                    <div className="flex items-center gap-2">
-                      <div className={`w-2 h-2 rounded-full ${config.color}`} />
-                      {getPriorityName(priority, t)}
-                    </div>
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+              <Select value={selectedPriority} onValueChange={(value: Priority) => setSelectedPriority(value)}>
+                <SelectTrigger className="w-20 md:w-24 text-xs md:text-sm">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {Object.entries(PRIORITY_CONFIG).map(([priority, config]) => (
+                    <SelectItem key={priority} value={priority}>
+                      <div className="flex items-center gap-2">
+                        <div className={`w-2 h-2 rounded-full ${config.color}`} />
+                        <span className="truncate">{getPriorityName(priority, t)}</span>
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
 
-            <Button 
-              type="button" 
-              variant="outline" 
-              onClick={() => setShowTemplates(true)}
-              className="gap-2"
-              aria-label="Open templates"
-            >
-              <Star size={16} />
-            </Button>
-            
-            <Button type="submit" disabled={!title.trim()}>
-              <Plus size={16} />
-              {t('addTask')}
-            </Button>
+              <Button 
+                type="button" 
+                variant="outline" 
+                size="sm"
+                onClick={() => setShowTemplates(true)}
+                className="gap-1 md:gap-2 px-2 md:px-3"
+                aria-label="Open templates"
+              >
+                <Star size={14} className="md:w-4 md:h-4" />
+                <span className="hidden md:inline">Templates</span>
+              </Button>
+              
+              <Button type="submit" disabled={!title.trim()} size="sm" className="gap-1 md:gap-2 px-2 md:px-3">
+                <Plus size={14} className="md:w-4 md:h-4" />
+                <span className="hidden sm:inline">{t('addTask')}</span>
+                <span className="sm:hidden">Add</span>
+              </Button>
+            </div>
           </div>
 
           {/* Advanced Options */}
@@ -154,17 +159,17 @@ export function AddTaskForm({ onAddTask, categories, templates, onQuickAdd }: Ad
                 type="button" 
                 variant="ghost" 
                 size="sm" 
-                className="text-muted-foreground hover:text-foreground p-0"
+                className="text-muted-foreground hover:text-foreground p-0 text-xs md:text-sm"
               >
-                <AlignLeft size={14} className="mr-2" />
+                <AlignLeft size={12} className="mr-1.5 md:mr-2 md:w-4 md:h-4" />
                 {showAdvanced ? 'Hide' : 'Add'} details
               </Button>
             </CollapsibleTrigger>
-            <CollapsibleContent className="space-y-3 pt-3">
+            <CollapsibleContent className="space-y-3 pt-2 md:pt-3">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <div className="space-y-2">
-                  <label className="text-sm font-medium flex items-center gap-2">
-                    <Calendar size={14} />
+                  <label className="text-xs md:text-sm font-medium flex items-center gap-1.5 md:gap-2">
+                    <Calendar size={12} className="md:w-4 md:h-4" />
                     {t('setDueDate')}
                   </label>
                   <Input
@@ -172,17 +177,17 @@ export function AddTaskForm({ onAddTask, categories, templates, onQuickAdd }: Ad
                     value={dueDate}
                     onChange={(e) => setDueDate(e.target.value)}
                     min={today}
-                    className="text-sm"
+                    className="text-xs md:text-sm h-9 md:h-10"
                   />
                 </div>
               </div>
               <div className="space-y-2">
-                <label className="text-sm font-medium">Description</label>
+                <label className="text-xs md:text-sm font-medium">Description</label>
                 <Textarea
                   placeholder={t('addTaskDescription')}
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  className="text-sm min-h-[60px] resize-none"
+                  className="text-xs md:text-sm min-h-[50px] md:min-h-[60px] resize-none"
                   rows={2}
                 />
               </div>
@@ -193,7 +198,7 @@ export function AddTaskForm({ onAddTask, categories, templates, onQuickAdd }: Ad
 
       {/* Template Picker Dialog */}
       <Dialog open={showTemplates} onOpenChange={setShowTemplates}>
-        <DialogContent className="max-w-4xl max-h-[80vh]">
+        <DialogContent className="max-w-xs md:max-w-4xl max-h-[80vh]">
           <TaskTemplatePicker
             templates={templates}
             categories={categories}

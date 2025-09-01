@@ -369,20 +369,20 @@ function TaskFlowApp() {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="container mx-auto max-w-4xl px-4 py-8">
+      <div className="container mx-auto max-w-4xl px-3 md:px-4 py-6 md:py-8">
         {/* Header */}
-        <div className="text-center mb-8">
-          <div className="flex items-center justify-center gap-3 mb-2">
-            <CheckCircle size={32} className="text-primary" />
-            <h1 className="text-3xl font-bold text-foreground">{t('appTitle')}</h1>
-            <div className="flex items-center gap-2">
+        <div className="text-center mb-6 md:mb-8">
+          <div className="flex items-center justify-center gap-2 md:gap-3 mb-2">
+            <CheckCircle size={28} className="text-primary md:w-8 md:h-8" />
+            <h1 className="text-2xl md:text-3xl font-bold text-foreground">{t('appTitle')}</h1>
+            <div className="flex items-center gap-1 md:gap-2">
               <LanguageSelector />
               <ThemeToggle />
             </div>
           </div>
-          <p className="text-muted-foreground">{t('appSubtitle')}</p>
+          <p className="text-sm md:text-base text-muted-foreground">{t('appSubtitle')}</p>
           {totalCount > 0 && (
-            <div className="flex items-center justify-center gap-4 mt-2 text-sm text-muted-foreground">
+            <div className="flex items-center justify-center gap-2 md:gap-4 mt-2 text-xs md:text-sm text-muted-foreground">
               <span>{completedCount} {t('tasksCompleted', { total: totalCount.toString() })}</span>
               {overdueCount > 0 && (
                 <span className="text-red-600 font-medium">
@@ -398,13 +398,13 @@ function TaskFlowApp() {
         
         {/* Completion Milestones */}
         {tasks.length > 0 && (
-          <div className="mb-6">
+          <div className="mb-4 md:mb-6">
             <CompletionMilestone tasks={tasks} />
           </div>
         )}
 
         {/* Add Task Form */}
-        <div className="mb-6">
+        <div className="mb-4 md:mb-6">
           <AddTaskForm 
             onAddTask={addTask} 
             categories={categories} 
@@ -414,7 +414,7 @@ function TaskFlowApp() {
 
         {/* Search and Filters */}
         {tasks.length > 0 && (
-          <div className="mb-6">
+          <div className="mb-4 md:mb-6">
             <TaskSearch
               filters={searchFilters}
               onFiltersChange={setSearchFilters}
@@ -425,9 +425,9 @@ function TaskFlowApp() {
 
         {/* Action Bar */}
         {tasks.length > 0 && (
-          <div className="flex items-center justify-between mb-6 flex-wrap gap-2">
+          <div className="flex items-start justify-between mb-4 md:mb-6 flex-col md:flex-row gap-3 md:gap-2">
             {/* Bulk Actions */}
-            <div className="flex-1">
+            <div className="flex-1 w-full md:w-auto">
               <BulkActions
                 selectedTasks={selectedTasks}
                 tasks={filteredTasks}
@@ -441,7 +441,7 @@ function TaskFlowApp() {
             </div>
             
             {/* Management Tools */}
-            <div className="flex items-center gap-2 flex-wrap">
+            <div className="flex items-center gap-1.5 md:gap-2 flex-wrap justify-start md:justify-end w-full md:w-auto">
               <NotificationButton
                 notifications={notifications}
                 tasks={tasks}
@@ -471,7 +471,7 @@ function TaskFlowApp() {
         {/* Category Filter */}
         {tasks.length > 0 && !hasActiveFilters && (
           <>
-            <div className="mb-6">
+            <div className="mb-4 md:mb-6">
               <CategoryFilter
                 categories={categories}
                 activeCategory={activeCategory}
@@ -479,7 +479,7 @@ function TaskFlowApp() {
                 taskCounts={taskCounts}
               />
             </div>
-            <Separator className="mb-6" />
+            <Separator className="mb-4 md:mb-6" />
           </>
         )}
 

@@ -42,48 +42,48 @@ export function TaskItem({
       layout
     >
       <Card className={cn(
-        "p-4 transition-all hover:shadow-md border-l-4",
+        "p-3 md:p-4 transition-all hover:shadow-md border-l-4",
         task.completed && "opacity-60",
         priorityConfig.color,
         overdue && !task.completed && "bg-red-50 dark:bg-red-950/20 border-red-200 dark:border-red-800",
         isSelected && "ring-2 ring-primary ring-offset-1"
       )}>
-        <div className="flex items-start gap-3">
+        <div className="flex items-start gap-2 md:gap-3">
           {showSelectMode && (
             <Button
               variant="ghost"
               size="sm"
-              className="h-6 w-6 p-0 mt-0.5"
+              className="h-5 w-5 md:h-6 md:w-6 p-0 mt-0.5"
               onClick={() => onSelectToggle?.(task.id)}
               aria-label={isSelected ? t('deselectTask') : t('selectTask')}
             >
-              {isSelected ? <CheckSquare size={16} className="shrink-0" /> : <Square size={16} className="shrink-0" />}
+              {isSelected ? <CheckSquare size={14} className="shrink-0 md:w-4 md:h-4" /> : <Square size={14} className="shrink-0 md:w-4 md:h-4" />}
             </Button>
           )}
           
           <AnimatedCheckbox
             checked={task.completed}
             onChange={() => onToggle(task.id)}
-            size="md"
-            className="mt-0.5"
+            size="sm"
+            className="mt-0.5 md:mt-1"
           />
           
           <div className="flex-1 min-w-0">
-            <div className="flex items-start justify-between mb-2">
+            <div className="flex items-start justify-between mb-1 md:mb-2">
               <div className="flex-1">
-                <div className="flex items-center gap-2 mb-1">
+                <div className="flex items-center gap-1.5 md:gap-2 mb-1">
                   <p className={cn(
-                    "text-sm font-medium transition-all",
+                    "text-xs md:text-sm font-medium transition-all leading-tight",
                     task.completed && "line-through text-muted-foreground"
                   )}>
                     {task.title}
                   </p>
                   <div className={cn(
-                    "w-2 h-2 rounded-full flex-shrink-0",
+                    "w-1.5 h-1.5 md:w-2 md:h-2 rounded-full flex-shrink-0",
                     priorityConfig.color
                   )} title={`${priorityConfig.label} priority`} />
                   {overdue && !task.completed && (
-                    <Badge variant="destructive" className="text-xs px-1.5 py-0.5">
+                    <Badge variant="destructive" className="text-[10px] md:text-xs px-1 md:px-1.5 py-0.5">
                       Overdue
                     </Badge>
                   )}
@@ -91,7 +91,7 @@ export function TaskItem({
                 
                 {task.description && (
                   <p className={cn(
-                    "text-xs text-muted-foreground mb-2",
+                    "text-[10px] md:text-xs text-muted-foreground mb-1 md:mb-2 leading-tight",
                     task.completed && "line-through"
                   )}>
                     {task.description}
@@ -101,9 +101,9 @@ export function TaskItem({
             </div>
             
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2 flex-wrap">
+              <div className="flex items-center gap-1.5 md:gap-2 flex-wrap">
                 <span className={cn(
-                  "text-xs font-medium",
+                  "text-[10px] md:text-xs font-medium",
                   priorityConfig.textColor,
                   task.completed && "text-muted-foreground"
                 )}>
@@ -111,18 +111,18 @@ export function TaskItem({
                 </span>
                 {category && (
                   <>
-                    <span className="text-xs text-muted-foreground">•</span>
-                    <span className="text-xs text-muted-foreground">{category.name}</span>
+                    <span className="text-[10px] md:text-xs text-muted-foreground">•</span>
+                    <span className="text-[10px] md:text-xs text-muted-foreground">{category.name}</span>
                   </>
                 )}
                 {task.dueDate && (
                   <>
-                    <span className="text-xs text-muted-foreground">•</span>
+                    <span className="text-[10px] md:text-xs text-muted-foreground">•</span>
                     <div className={cn(
-                      "flex items-center gap-1 text-xs",
+                      "flex items-center gap-1 text-[10px] md:text-xs",
                       overdue && !task.completed ? "text-red-600" : "text-muted-foreground"
                     )}>
-                      <Calendar size={12} />
+                      <Calendar size={10} className="md:w-3 md:h-3" />
                       {formatDate(task.dueDate)}
                     </div>
                   </>
@@ -133,10 +133,10 @@ export function TaskItem({
                 variant="ghost"
                 size="sm"
                 onClick={() => onDelete(task.id)}
-                className="h-8 w-8 p-0 text-muted-foreground hover:text-destructive flex-shrink-0"
+                className="h-6 w-6 md:h-8 md:w-8 p-0 text-muted-foreground hover:text-destructive flex-shrink-0"
                 aria-label={t('deleteTask')}
               >
-                <Trash size={14} className="shrink-0" />
+                <Trash size={12} className="shrink-0 md:w-4 md:h-4" />
               </Button>
             </div>
           </div>

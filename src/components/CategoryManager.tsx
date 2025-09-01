@@ -7,7 +7,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { Settings, Plus, Trash, Pencil } from '@phosphor-icons/react';
+import { FolderOpen, Plus, Trash, Pencil } from '@phosphor-icons/react';
 import * as Icons from '@phosphor-icons/react';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
@@ -94,92 +94,100 @@ export const CategoryManager = ({ categories, onUpdateCategories, tasks }: Categ
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button variant="outline" size="sm" className="gap-2">
-          <Settings className="w-4 h-4" />
+          <FolderOpen className="w-4 h-4" />
           {t('manageCategories')}
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-w-4xl max-h-[80vh] overflow-hidden flex flex-col">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            <Settings className="w-5 h-5" />
+      <DialogContent className="max-w-5xl max-h-[85vh] overflow-hidden flex flex-col">
+        <DialogHeader className="pb-4">
+          <DialogTitle className="flex items-center gap-2 text-xl">
+            <FolderOpen className="w-6 h-6" />
             {t('manageCategories')}
           </DialogTitle>
         </DialogHeader>
 
-        <div className="flex-1 overflow-y-auto space-y-6">
+        <div className="flex-1 overflow-y-auto space-y-8 px-1">
           {/* Add/Edit Category Form */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg">
+          <Card className="border-2">
+            <CardHeader className="pb-4">
+              <CardTitle className="text-lg flex items-center gap-2">
+                <Plus className="w-5 h-5" />
                 {editingCategory ? 'Edit Category' : 'Add New Category'}
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <CardContent className="space-y-6">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 {/* Name Input */}
-                <div className="space-y-2">
-                  <Label htmlFor="category-name">Category Name</Label>
+                <div className="space-y-3">
+                  <Label htmlFor="category-name" className="text-sm font-medium">Category Name</Label>
                   <Input
                     id="category-name"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     placeholder="Enter category name"
                     maxLength={20}
+                    className="h-10"
                   />
                 </div>
 
                 {/* Color Picker */}
-                <div className="space-y-2">
-                  <Label>Category Color</Label>
-                  <div className="grid grid-cols-6 gap-2">
+                <div className="space-y-3">
+                  <Label className="text-sm font-medium">Category Color</Label>
+                  <div className="grid grid-cols-6 gap-3">
                     {CATEGORY_COLORS.map(color => (
                       <button
                         key={color}
                         className={cn(
-                          "w-8 h-8 rounded-md border-2 transition-all",
+                          "w-10 h-10 rounded-lg border-2 transition-all hover:scale-105",
                           color,
-                          formData.color === color ? "border-foreground scale-110" : "border-muted"
+                          formData.color === color ? "border-foreground scale-110 ring-2 ring-primary/20" : "border-muted"
                         )}
                         onClick={() => setFormData({ ...formData, color })}
+                        title={color}
                       />
                     ))}
                   </div>
                 </div>
 
                 {/* Icon Picker */}
-                <div className="space-y-2">
-                  <Label>Category Icon</Label>
-                  <div className="grid grid-cols-8 gap-2 max-h-24 overflow-y-auto">
+                <div className="space-y-3">
+                  <Label className="text-sm font-medium">Category Icon</Label>
+                  <div className="grid grid-cols-8 gap-2 max-h-32 overflow-y-auto border rounded-lg p-2 bg-muted/30">
                     {CATEGORY_ICONS.map(icon => (
                       <button
                         key={icon}
                         className={cn(
-                          "p-2 rounded-md border transition-all hover:bg-muted",
-                          formData.icon === icon ? "border-primary bg-primary/10" : "border-muted"
+                          "p-2.5 rounded-lg border transition-all hover:bg-muted hover:scale-105",
+                          formData.icon === icon ? "border-primary bg-primary/10 scale-105" : "border-muted/50"
                         )}
                         onClick={() => setFormData({ ...formData, icon })}
+                        title={icon}
                       >
-                        {renderIcon(icon)}
+                        {renderIcon(icon, "w-4 h-4")}
                       </button>
                     ))}
                   </div>
                 </div>
               </div>
 
-              {/* Preview */}
-              <div className="space-y-2">
-                <Label>Preview</Label>
-                <Badge className={cn(formData.color, "text-white gap-2")}>
-                  {renderIcon(formData.icon)}
-                  {formData.name || 'Category Name'}
-                </Badge>
+              {/* Preview Section */}
+              <div className="space-y-3 pt-4 border-t">
+                <Label className="text-sm font-medium">Preview</Label>
+                <div className="flex items-center gap-3">
+                  <Badge className={cn(formData.color, "text-white gap-2 px-3 py-1.5 text-sm")}>
+                    {renderIcon(formData.icon, "w-4 h-4")}
+                    {formData.name || 'Category Name'}
+                  </Badge>
+                  <span className="text-muted-foreground text-sm">This is how your category will appear</span>
+                </div>
               </div>
 
               {/* Action Buttons */}
-              <div className="flex gap-2">
+              <div className="flex gap-3 pt-2">
                 {editingCategory ? (
                   <>
-                    <Button onClick={handleUpdateCategory} disabled={!formData.name.trim()}>
+                    <Button onClick={handleUpdateCategory} disabled={!formData.name.trim()} className="gap-2">
+                      <Pencil className="w-4 h-4" />
                       Update Category
                     </Button>
                     <Button
@@ -193,8 +201,8 @@ export const CategoryManager = ({ categories, onUpdateCategories, tasks }: Categ
                     </Button>
                   </>
                 ) : (
-                  <Button onClick={handleAddCategory} disabled={!formData.name.trim()}>
-                    <Plus className="w-4 h-4 mr-2" />
+                  <Button onClick={handleAddCategory} disabled={!formData.name.trim()} className="gap-2">
+                    <Plus className="w-4 h-4" />
                     Add Category
                   </Button>
                 )}
@@ -202,38 +210,45 @@ export const CategoryManager = ({ categories, onUpdateCategories, tasks }: Categ
             </CardContent>
           </Card>
 
-          <Separator />
+          <Separator className="my-6" />
 
           {/* Existing Categories */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-medium">Existing Categories</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div className="space-y-6">
+            <h3 className="text-xl font-semibold flex items-center gap-2">
+              <FolderOpen className="w-5 h-5" />
+              Existing Categories
+            </h3>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               {categories.map(category => {
                 const taskCount = tasks.filter(task => task.category === category.id).length;
                 
                 return (
-                  <Card key={category.id} className="relative">
-                    <CardContent className="p-4">
+                  <Card key={category.id} className="hover:shadow-md transition-all duration-200">
+                    <CardContent className="p-5">
                       <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                          <div className={cn("p-2 rounded-md", category.color)}>
-                            {renderIcon(category.icon, "w-4 h-4 text-white")}
+                        <div className="flex items-center gap-4">
+                          <div className={cn("p-3 rounded-lg shadow-sm", category.color)}>
+                            {renderIcon(category.icon, "w-5 h-5 text-white")}
                           </div>
-                          <div>
-                            <h4 className="font-medium">{category.name}</h4>
-                            <p className="text-xs text-muted-foreground">
-                              {taskCount} task{taskCount !== 1 ? 's' : ''}
-                              {!category.isCustom && ' (Default)'}
-                            </p>
+                          <div className="space-y-1">
+                            <h4 className="font-semibold text-base">{category.name}</h4>
+                            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                              <span>{taskCount} task{taskCount !== 1 ? 's' : ''}</span>
+                              {!category.isCustom && (
+                                <Badge variant="secondary" className="text-xs px-2 py-0.5">
+                                  Default
+                                </Badge>
+                              )}
+                            </div>
                           </div>
                         </div>
                         
-                        <div className="flex gap-1">
+                        <div className="flex gap-2">
                           <Button
                             variant="ghost"
                             size="sm"
                             onClick={() => handleEditCategory(category)}
-                            className="h-8 w-8 p-0"
+                            className="h-9 w-9 p-0 hover:bg-primary/10"
                             title={t('editCategory')}
                           >
                             <Pencil size={16} />
@@ -243,7 +258,7 @@ export const CategoryManager = ({ categories, onUpdateCategories, tasks }: Categ
                               variant="ghost"
                               size="sm"
                               onClick={() => handleDeleteCategory(category.id)}
-                              className="text-destructive hover:text-destructive h-8 w-8 p-0"
+                              className="text-destructive hover:text-destructive hover:bg-destructive/10 h-9 w-9 p-0"
                               title={t('deleteCategory')}
                             >
                               <Trash size={16} />

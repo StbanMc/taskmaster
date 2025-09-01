@@ -51,79 +51,79 @@ export function TaskStats({ tasks }: TaskStatsProps) {
   if (stats.total === 0) return null;
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+    <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-6">
       {/* Completion Rate */}
-      <Card className="p-4">
+      <Card className="p-3 md:p-4">
         <div className="flex items-center justify-between mb-2">
-          <div className="flex items-center gap-2">
-            <Target size={16} className="text-primary" />
-            <span className="text-sm font-medium">Progress</span>
+          <div className="flex items-center gap-1.5 md:gap-2">
+            <Target size={14} className="text-primary md:w-4 md:h-4" />
+            <span className="text-xs md:text-sm font-medium">Progress</span>
           </div>
-          <span className="text-2xl font-bold text-primary">{stats.completionRate}%</span>
+          <span className="text-lg md:text-2xl font-bold text-primary">{stats.completionRate}%</span>
         </div>
-        <Progress value={stats.completionRate} className="h-2" />
-        <p className="text-xs text-muted-foreground mt-1">
-          {stats.completed} of {stats.total} tasks completed
+        <Progress value={stats.completionRate} className="h-1.5 md:h-2" />
+        <p className="text-[10px] md:text-xs text-muted-foreground mt-1">
+          {stats.completed} of {stats.total} tasks
         </p>
       </Card>
 
       {/* Due Today */}
-      <Card className="p-4">
+      <Card className="p-3 md:p-4">
         <div className="flex items-center justify-between mb-2">
-          <div className="flex items-center gap-2">
-            <Clock size={16} className="text-blue-600" />
-            <span className="text-sm font-medium">Due Today</span>
+          <div className="flex items-center gap-1.5 md:gap-2">
+            <Clock size={14} className="text-blue-600 md:w-4 md:h-4" />
+            <span className="text-xs md:text-sm font-medium">Today</span>
           </div>
-          <span className="text-2xl font-bold text-blue-600">{stats.dueToday}</span>
+          <span className="text-lg md:text-2xl font-bold text-blue-600">{stats.dueToday}</span>
         </div>
-        <p className="text-xs text-muted-foreground">
-          Tasks requiring attention today
+        <p className="text-[10px] md:text-xs text-muted-foreground">
+          Due today
         </p>
       </Card>
 
       {/* Overdue */}
       {stats.overdue > 0 && (
-        <Card className="p-4 border-red-200 bg-red-50">
+        <Card className="p-3 md:p-4 border-red-200 bg-red-50 dark:border-red-800 dark:bg-red-950/20">
           <div className="flex items-center justify-between mb-2">
-            <div className="flex items-center gap-2">
-              <AlertTriangle size={16} className="text-red-600" />
-              <span className="text-sm font-medium text-red-900">Overdue</span>
+            <div className="flex items-center gap-1.5 md:gap-2">
+              <AlertTriangle size={14} className="text-red-600 md:w-4 md:h-4" />
+              <span className="text-xs md:text-sm font-medium text-red-900 dark:text-red-300">Overdue</span>
             </div>
-            <span className="text-2xl font-bold text-red-600">{stats.overdue}</span>
+            <span className="text-lg md:text-2xl font-bold text-red-600">{stats.overdue}</span>
           </div>
-          <p className="text-xs text-red-700">
-            Tasks past their due date
+          <p className="text-[10px] md:text-xs text-red-700 dark:text-red-400">
+            Past due
           </p>
         </Card>
       )}
 
       {/* Weekly Trend */}
-      <Card className="p-4">
+      <Card className="p-3 md:p-4">
         <div className="flex items-center justify-between mb-2">
-          <div className="flex items-center gap-2">
-            <TrendingUp size={16} className="text-green-600" />
-            <span className="text-sm font-medium">This Week</span>
+          <div className="flex items-center gap-1.5 md:gap-2">
+            <TrendingUp size={14} className="text-green-600 md:w-4 md:h-4" />
+            <span className="text-xs md:text-sm font-medium">Week</span>
           </div>
-          <span className="text-2xl font-bold text-green-600">{stats.thisWeekCompleted}</span>
+          <span className="text-lg md:text-2xl font-bold text-green-600">{stats.thisWeekCompleted}</span>
         </div>
-        <p className="text-xs text-muted-foreground">
-          Tasks completed this week
+        <p className="text-[10px] md:text-xs text-muted-foreground">
+          This week
         </p>
       </Card>
 
       {/* Priority Breakdown */}
-      <Card className="p-4 md:col-span-2 lg:col-span-4">
-        <h3 className="text-sm font-medium mb-3">Pending Tasks by Priority</h3>
-        <div className="flex gap-4">
+      <Card className="p-3 md:p-4 col-span-2 md:col-span-2 lg:col-span-4">
+        <h3 className="text-xs md:text-sm font-medium mb-2 md:mb-3">Pending by Priority</h3>
+        <div className="flex gap-2 md:gap-4 flex-wrap">
           {Object.entries(stats.priorityBreakdown).map(([priority, count]) => {
             const config = getPriorityConfig(priority as any);
             return (
               <Badge
                 key={priority}
                 variant="secondary"
-                className={`flex items-center gap-2 ${config.textColor}`}
+                className={`flex items-center gap-1.5 md:gap-2 text-[10px] md:text-xs px-2 py-1 ${config.textColor}`}
               >
-                <div className={`w-2 h-2 rounded-full ${config.color}`} />
+                <div className={`w-1.5 h-1.5 md:w-2 md:h-2 rounded-full ${config.color}`} />
                 {config.label}: {count}
               </Badge>
             );
