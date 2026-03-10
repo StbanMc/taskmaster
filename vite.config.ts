@@ -21,12 +21,14 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': resolve(projectRoot, 'src')
-    }
+    },
+    dedupe: ['react', 'react-dom']
   },
   optimizeDeps: {
     include: [
       'react',
       'react-dom',
+      'react/jsx-runtime',
       '@phosphor-icons/react',
       'sonner',
       'framer-motion',
@@ -34,11 +36,18 @@ export default defineConfig({
       '@dnd-kit/sortable',
       '@dnd-kit/utilities'
     ],
-    exclude: ['@github/spark']
+    exclude: ['@github/spark'],
+    force: true
   },
   server: {
     fs: {
       strict: false
+    }
+  },
+  build: {
+    commonjsOptions: {
+      include: [/node_modules/],
+      transformMixedEsModules: true
     }
   }
 });
