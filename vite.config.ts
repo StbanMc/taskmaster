@@ -13,7 +13,6 @@ export default defineConfig({
   plugins: [
     react(),
     tailwindcss(),
-    // DO NOT REMOVE
     createIconImportProxy() as PluginOption,
     sparkPlugin() as PluginOption,
   ],
@@ -22,4 +21,22 @@ export default defineConfig({
       '@': resolve(projectRoot, 'src')
     }
   },
+  optimizeDeps: {
+    include: [
+      'react',
+      'react-dom',
+      '@phosphor-icons/react',
+      'sonner',
+      'framer-motion',
+      '@dnd-kit/core',
+      '@dnd-kit/sortable',
+      '@dnd-kit/utilities'
+    ],
+    exclude: ['@github/spark']
+  },
+  server: {
+    fs: {
+      strict: false
+    }
+  }
 });

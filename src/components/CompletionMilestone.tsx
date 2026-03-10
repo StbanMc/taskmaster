@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { TrendUp, Trophy, Target, Zap } from '@phosphor-icons/react';
+import { TrendUp, Trophy, Target, Lightning } from '@phosphor-icons/react';
 import { useI18n } from '@/contexts/I18nContext';
 import { Task } from '@/lib/types';
 
@@ -129,7 +129,7 @@ export function CompletionMilestone({ tasks }: CompletionMilestoneProps) {
         type: 'streak',
         title: t('weekWarrior'),
         description: t('sevenDayStreak'),
-        icon: <Zap size={20} className="text-orange-500" />,
+        icon: <Lightning size={20} className="text-orange-500" />,
         achieved: currentStreak >= 7,
         progress: Math.min(currentStreak, 7),
         target: 7
@@ -155,7 +155,7 @@ export function CompletionMilestone({ tasks }: CompletionMilestoneProps) {
           type: 'priority_cleared' as const,
           title: t('priorityFocus', { priority: priority.charAt(0).toUpperCase() + priority.slice(1) }),
           description: t('completedAllPriorityTasks', { priority, count: stats.total.toString() }),
-          icon: <Zap size={20} className="text-red-500" />,
+          icon: <Lightning size={20} className="text-red-500" />,
           achieved: true,
           progress: stats.completed,
           target: stats.total
