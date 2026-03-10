@@ -1,17 +1,26 @@
-# 📋 TaskFlow - Aplicación Avanzada de Gestión de Tareas / Advanced Task Management Application
+# ✨ Welcome to Your Spark Template!
+You've just launched your brand-new Spark Template Codespace — everything’s fired up and ready for you to explore, build, and create with Spark!
 
-[English](#english) | [Español](#español)
+This template is your blank canvas. It comes with a minimal setup to help you get started quickly with Spark development.
 
----
+🚀 What's Inside?
+- A clean, minimal Spark environment
+- Pre-configured for local development
+- Ready to scale with your ideas
+  
+🧠 What Can You Do?
 
-## Español
+Right now, this is just a starting point — the perfect place to begin building and testing your Spark applications.
 
-### 🌟 Descripción
+🧹 Just Exploring?
+No problem! If you were just checking things out and don’t need to keep this code:
 
-**TaskFlow** es una aplicación web moderna y completa de gestión de tareas diseñada para aumentar tu productividad. Con una interfaz intuitiva y funciones avanzadas, TaskFlow te ayuda a organizar, priorizar y completar tus tareas de manera eficiente.
+- Simply delete your Spark.
+- Everything will be cleaned up — no traces left behind.
 
-### ✨ Características Principales
+📄 License For Spark Template Resources 
 
+<<<<<<< Updated upstream
 - **📱 Interfaz Moderna**: Diseño limpio y responsivo que funciona perfectamente en todos los dispositivos
 - **🎯 Sistema de Prioridades**: Organiza tareas por prioridad alta, media y baja con indicadores visuales
 - **🏷️ Categorías Personalizadas**: Crea categorías con colores e íconos personalizados
@@ -252,3 +261,6 @@ Desarrollado con ❤️ por Esteban Esquivel / Developed with ❤️ by Esteban 
 ---
 
 **TaskFlow** - Tu compañero de productividad / Your productivity companion 🚀
+=======
+The Spark Template files and resources from GitHub are licensed under the terms of the MIT license, Copyright GitHub, Inc.
+>>>>>>> Stashed changes
